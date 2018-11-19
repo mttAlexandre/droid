@@ -11,8 +11,9 @@ import android.widget.ListView;
 import java.util.List;
 import java.util.Random;
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity { // test push
 
+    int testpush=0;
     private DBTache dbt;
     private ListView hlv;
     private String[] prenoms = new String[]{
