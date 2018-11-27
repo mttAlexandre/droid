@@ -91,7 +91,7 @@ public class Home extends AppCompatActivity { // test push
     }
 
     public void onClickCalendar(View v){
-        Intent intent = new Intent(this, Calendar.class);
+        Intent intent = new Intent(this, CalendarTask.class);
         startActivity(intent);
     }
 
