@@ -39,7 +39,7 @@ public class CalendarTask extends Activity {
         TableLayout lay = findViewById(R.id.layoutButton);
         for(int j = 0; j < 6; j++){
 
-            int dayMax = mcal.getActualMaximum(java.util.Calendar.DAY_OF_MONTH);
+            int dayMax = mcal.getActualMaximum(Calendar.DAY_OF_MONTH);
             int parcours = dayMax - compteurJour + 1;
 
             boolean testExe = true;
@@ -57,7 +57,7 @@ public class CalendarTask extends Activity {
                 lay.addView(tr);
                 if(j == 0){
                     int firstDay;
-                    switch(mcal.get(java.util.Calendar.DAY_OF_WEEK)){
+                    switch(mcal.get(Calendar.DAY_OF_WEEK)){
                         case 1:
                             firstDay = 6;
                             break;
@@ -101,12 +101,12 @@ public class CalendarTask extends Activity {
                     for(int i = firstDay; i < 7; i++){
                         Button b = new Button(cont);
 
-                        mcal.set(java.util.Calendar.DAY_OF_MONTH, compteurJour);
+                        mcal.set(Calendar.DAY_OF_MONTH, compteurJour);
                         compteurJour++;
 
                         b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT, (float) 0.14));
                         b.setId(i);
-                        b.setText("" + mcal.get(java.util.Calendar.DAY_OF_MONTH));
+                        b.setText("" + mcal.get(Calendar.DAY_OF_MONTH));
                         b.setGravity(AXIS_PULL_BEFORE);
                         b.setSingleLine(true);
                         b.setPadding(5, 0, 0, 0);
@@ -129,12 +129,12 @@ public class CalendarTask extends Activity {
                     for(int i = 0; i < parcours; i++){
                         Button b = new Button(cont);
 
-                        mcal.set(java.util.Calendar.DAY_OF_MONTH, compteurJour);
+                        mcal.set(Calendar.DAY_OF_MONTH, compteurJour);
                         compteurJour++;
 
                         b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT, (float) 0.14));
                         b.setId(i);
-                        b.setText("" + mcal.get(java.util.Calendar.DAY_OF_MONTH));
+                        b.setText("" + mcal.get(Calendar.DAY_OF_MONTH));
                         b.setGravity(AXIS_PULL_BEFORE);
                         b.setSingleLine(true);
                         b.setPadding(5, 0, 0, 0);
@@ -174,7 +174,7 @@ public class CalendarTask extends Activity {
                         b.setId(i);
                         mcal.set(java.util.Calendar.DAY_OF_MONTH, compteurJour);
                         compteurJour++;
-                        b.setText("" + mcal.get(java.util.Calendar.DAY_OF_MONTH));
+                        b.setText("" + mcal.get(Calendar.DAY_OF_MONTH));
                         b.setGravity(AXIS_PULL_BEFORE);
                         b.setSingleLine(true);
                         b.setPadding(5, 0, 0, 0);
