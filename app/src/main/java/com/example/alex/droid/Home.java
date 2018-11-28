@@ -106,7 +106,7 @@ public class Home extends AppCompatActivity { // test push
             List<String> values = dbt.getAllNomTaches();
             //List<Item> res = null;//Item.tacheToItem(values);
             adapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_list_item_multiple_choice, values);
+                    R.layout.checkitem, values);
             hlv.setAdapter(adapter);
             //adapter.notifyDataSetChanged();
         }else{
