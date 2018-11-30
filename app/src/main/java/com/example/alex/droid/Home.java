@@ -27,6 +27,7 @@ public class Home extends AppCompatActivity { // test push
     private DBTache dbt;
     private ListView hlv;
     private ArrayAdapter<String> adapter;
+    private ArrayList<Tache> values;
     private boolean checkbox=false;
 
     MyCustomAdapter dataAdapter = null;
@@ -40,16 +41,14 @@ public class Home extends AppCompatActivity { // test push
         dbt.open();
 
         hlv = findViewById(R.id.homelist);
-        ArrayList<Tache> values = dbt.getAllTaches();
-        //adapter = new ArrayAdapter<>(this,
-          //      android.R.layout.simple_list_item_1, values);
 
+        values = dbt.getAllTaches();
         dataAdapter = new MyCustomAdapter(this,
                 R.layout.checkitem, values);
 
+        //dataAdapter.notifyDataSetChanged();
 
         hlv.setAdapter(dataAdapter);
-
         /*
         hlv = findViewById(R.id.homelist);
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(Home.this,
@@ -124,9 +123,9 @@ public class Home extends AppCompatActivity { // test push
 
     public void onClickAdd(View v){
         Tache t = null;
-        t = dbt.createTache("test");
+        t = dbt.createTache("testX");
         dataAdapter.add(t);
-        dataAdapter.notifyDataSetChanged();
+        //dataAdapter.notifyDataSetChanged();
     }
 
     public void onListItemClick(ListView l, View v, int position, long id) {
@@ -143,8 +142,8 @@ public class Home extends AppCompatActivity { // test push
 
         public MyCustomAdapter(Context context, int resource, ArrayList<Tache> list) {
             super(context, resource, list);
-            this.tacheList=new ArrayList<>();
-            tacheList.addAll(list);
+            this.tacheList=list;//new ArrayList<>();
+            //tacheList.addAll(list);
         }
 
         private class ViewHolder {
@@ -164,8 +163,8 @@ public class Home extends AppCompatActivity { // test push
                 convertView = vi.inflate(R.layout.checkitem, null);
 
                 holder = new ViewHolder();
-                holder.code = (TextView) convertView.findViewById(R.id.code);
-                holder.name = (CheckBox) convertView.findViewById(R.id.checkBox1);
+                holder.code = convertView.findViewById(R.id.code);
+                holder.name = convertView.findViewById(R.id.checkBox1);
                 convertView.setTag(holder);
 
                 holder.name.setOnClickListener( new View.OnClickListener() {
@@ -193,7 +192,11 @@ public class Home extends AppCompatActivity { // test push
             return convertView;
         }
 
-
+        @Override
+        public void add(Tache t) {
+            tacheList.add(t);
+            notifyDataSetChanged();
+        }
 
     }
 
