@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Random;
 
 public class Home extends AppCompatActivity { // test push
-    
+
     private DBTache dbt;
     private ListView hlv;
     private ArrayAdapter<String> adapter;
@@ -40,10 +40,14 @@ public class Home extends AppCompatActivity { // test push
         dbt.open();
 
         hlv = findViewById(R.id.homelist);
-        List<String> values = dbt.getAllNomTaches();
-        List<String> v = Collections.singletonList(dbt.getAllTaches().toString());
-        adapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_list_item_1, values);
+        List<Tache> values = dbt.getAllTaches();
+        //adapter = new ArrayAdapter<>(this,
+          //      android.R.layout.simple_list_item_1, values);
+
+        dataAdapter = new MyCustomAdapter(this,
+                R.layout.checkitem, values);
+
+
         hlv.setAdapter(adapter);
 
         /*
@@ -136,7 +140,7 @@ public class Home extends AppCompatActivity { // test push
 
         private ArrayList<Tache> tacheList;
 
-        public MyCustomAdapter(Context context, int resource, ArrayList<Tache> list) {
+        public MyCustomAdapter(Context context, int resource, List<Tache> list) {
             super(context, resource, list);
             this.tacheList=new ArrayList<>();
             tacheList.addAll(list);
