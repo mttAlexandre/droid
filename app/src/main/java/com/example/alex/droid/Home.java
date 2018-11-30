@@ -125,8 +125,8 @@ public class Home extends AppCompatActivity { // test push
     public void onClickAdd(View v){
         Tache t = null;
         t = dbt.createTache("test");
-        adapter.add(t.getNom());
-        adapter.notifyDataSetChanged();
+        dataAdapter.add(t);
+        dataAdapter.notifyDataSetChanged();
     }
 
     public void onListItemClick(ListView l, View v, int position, long id) {
