@@ -48,7 +48,7 @@ public class Home extends AppCompatActivity { // test push
                 R.layout.checkitem, values);
 
 
-        hlv.setAdapter(adapter);
+        hlv.setAdapter(dataAdapter);
 
         /*
         hlv = findViewById(R.id.homelist);
