@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class Home extends AppCompatActivity { // test push
+public class Home extends AppCompatActivity {
 
     private DBTache dbt;
     private ListView hlv;
@@ -46,15 +46,7 @@ public class Home extends AppCompatActivity { // test push
         dataAdapter = new MyCustomAdapter(this,
                 R.layout.checkitem, values);
 
-        //dataAdapter.notifyDataSetChanged();
-
         hlv.setAdapter(dataAdapter);
-        /*
-        hlv = findViewById(R.id.homelist);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<>(Home.this,
-                android.R.layout.simple_list_item_1, prenoms);
-        hlv.setAdapter(adapter);
-        */
     }
 
     protected void onStart(Bundle savedInstanceState){
@@ -106,26 +98,29 @@ public class Home extends AppCompatActivity { // test push
     public void onClickDelete(View v){
         if(!checkbox) {
             checkbox=true;
+            /*
             List<String> values = dbt.getAllNomTaches();
             //List<Item> res = null;//Item.tacheToItem(values);
             adapter = new ArrayAdapter<String>(this,
                     R.layout.checkitem, values);
             hlv.setAdapter(adapter);
             //adapter.notifyDataSetChanged();
+            */
         }else{
             checkbox=false;
+            /*
             List<String> values = dbt.getAllNomTaches();
             adapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_list_item_1, values);
             hlv.setAdapter(adapter);
+            */
         }
     }
 
     public void onClickAdd(View v){
-        Tache t = null;
+        Tache t;
         t = dbt.createTache("testX");
         dataAdapter.add(t);
-        //dataAdapter.notifyDataSetChanged();
     }
 
     public void onListItemClick(ListView l, View v, int position, long id) {
