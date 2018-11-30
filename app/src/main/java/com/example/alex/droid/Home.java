@@ -40,7 +40,7 @@ public class Home extends AppCompatActivity { // test push
         dbt.open();
 
         hlv = findViewById(R.id.homelist);
-        List<Tache> values = dbt.getAllTaches();
+        ArrayList<Tache> values = dbt.getAllTaches();
         //adapter = new ArrayAdapter<>(this,
           //      android.R.layout.simple_list_item_1, values);
 
@@ -79,7 +79,8 @@ public class Home extends AppCompatActivity { // test push
         startActivity(intent);
     }
 
-    public void onClickDetail(View v){// EXEMPLE A LIRE
+    public void onClickDetail(View v){
+        // EXEMPLE A LIRE
         // ÇA C'EST QUAND TU VEUX METTRE QUE LE VUE XML SI ELLE EST STATIC
         //setContentView(R.layout.detail);
         // ÇA C'EST PAREIL MAIS ÇA CHARGE LES ÉLÉMENTS DYNAMIC EN PLUS (COMME LE CONTENU DE LA LISTVIEW POUR CLICKHOME) et il
@@ -140,7 +141,7 @@ public class Home extends AppCompatActivity { // test push
 
         private ArrayList<Tache> tacheList;
 
-        public MyCustomAdapter(Context context, int resource, List<Tache> list) {
+        public MyCustomAdapter(Context context, int resource, ArrayList<Tache> list) {
             super(context, resource, list);
             this.tacheList=new ArrayList<>();
             tacheList.addAll(list);

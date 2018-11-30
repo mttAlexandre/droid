@@ -49,8 +49,8 @@ public class DBTache {
                 + " = " + id, null);
     }
 
-    public List<Tache> getAllTaches() {
-        List<Tache> taches = new ArrayList<Tache>();
+    public ArrayList<Tache> getAllTaches() {
+        ArrayList<Tache> taches = new ArrayList<Tache>();
 
         Cursor cursor = database.query(DBHelper.TABLE_TACHE,
                 allColumns, null, null, null, null, null);
@@ -61,13 +61,12 @@ public class DBTache {
             taches.add(t);
             cursor.moveToNext();
         }
-        // assurez-vous de la fermeture du curseur
         cursor.close();
         return taches;
     }
 
-    public List<String> getAllNomTaches() {
-        List<String> taches = new ArrayList<String>();
+    public ArrayList<String> getAllNomTaches() {
+        ArrayList<String> taches = new ArrayList<String>();
 
         Cursor cursor = database.query(DBHelper.TABLE_TACHE,
                 allColumns, null, null, null, null, null);
@@ -78,7 +77,6 @@ public class DBTache {
             taches.add(t.getNom());
             cursor.moveToNext();
         }
-        // assurez-vous de la fermeture du curseur
         cursor.close();
         return taches;
     }
