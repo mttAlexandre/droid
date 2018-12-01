@@ -30,6 +30,7 @@ public class Setting extends Activity {
 
 
         Intent intent = new Intent(this, Home.class);
+        intent.putExtra("radio", s);
         startActivity(intent);
     }
 }

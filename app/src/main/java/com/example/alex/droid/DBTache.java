@@ -53,7 +53,7 @@ public class DBTache {
         ArrayList<Tache> taches = new ArrayList<Tache>();
 
         Cursor cursor = database.query(DBHelper.TABLE_TACHE,
-                allColumns, null, null, null, null, null);
+                allColumns, null, null, null, null, DBHelper.COLUMN_DATE+" DESC");
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -81,7 +81,7 @@ public class DBTache {
         return taches;
     }
 
-    public ArrayList<Tache> getAllTachesByDeadlin() {
+    public ArrayList<Tache> getAllTachesByDeadline() {
         ArrayList<Tache> taches = new ArrayList<Tache>();
 
         Cursor cursor = database.query(DBHelper.TABLE_TACHE,

@@ -40,9 +40,11 @@ public class Home extends AppCompatActivity {
         dbt = new DBTache(this);
         dbt.open();
 
-        hlv = findViewById(R.id.homelist);
+        Intent intent = getIntent();
+        int radio = intent.getIntExtra("radio", -1);
 
-        values = dbt.getAllTaches();
+        hlv = findViewById(R.id.homelist);
+        values = setValues(radio);
         dataAdapter = new MyCustomAdapter(this,
                 R.layout.item, values, false);
 
@@ -63,6 +65,33 @@ public class Home extends AppCompatActivity {
     protected void onPause() {
         dbt.close();
         super.onPause();
+    }
+
+    public ArrayList<Tache> setValues(int i){
+        ArrayList<Tache> res=new ArrayList<>();
+        switch (i){
+            case 0:
+                res=dbt.getAllTachesByDate();
+                break;
+            case 1:
+                res=dbt.getAllTachesByDeadline();
+                break;
+            case 2:
+                res=dbt.getAllTachesByPriorite();
+                break;
+            case 3:
+                res=dbt.getAllTachesByLieu();
+                break;
+            case 4:
+                res=dbt.getAllTachesByTheme();
+                break;
+            case 5:
+                res=dbt.getAllTachesByStatu();
+                break;
+            default:
+                res=dbt.getAllTaches();   
+        }
+        return res;
     }
 
     public void onClickSetting(View v){
