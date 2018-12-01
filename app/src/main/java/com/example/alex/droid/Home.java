@@ -44,7 +44,7 @@ public class Home extends AppCompatActivity {
 
         values = dbt.getAllTaches();
         dataAdapter = new MyCustomAdapter(this,
-                R.layout.checkitem, values, false);
+                R.layout.item, values, false);
 
         hlv.setAdapter(dataAdapter);
     }
@@ -98,8 +98,9 @@ public class Home extends AppCompatActivity {
     public void onClickDelete(View v){
         if(!checkbox) {
             checkbox=true;
-            dataAdapter.checkbox=true;
-            dataAdapter.notifyDataSetChanged();
+            dataAdapter = new MyCustomAdapter(this,
+                    R.layout.checkitem, values, true);
+            hlv.setAdapter(dataAdapter);
             /*
             List<String> values = dbt.getAllNomTaches();
             //List<Item> res = null;//Item.tacheToItem(values);
@@ -119,8 +120,11 @@ public class Home extends AppCompatActivity {
                     toDelete.add(tache);
                 }
             }
-            dataAdapter.checkbox=false;
             dataAdapter.deleteAll(toDelete);
+
+            dataAdapter = new MyCustomAdapter(this,
+                    R.layout.item, values, false);
+            hlv.setAdapter(dataAdapter);
             /*
             List<String> values = dbt.getAllNomTaches();
             adapter = new ArrayAdapter<String>(this,
@@ -154,9 +158,8 @@ public class Home extends AppCompatActivity {
 
         public MyCustomAdapter(Context context, int resource, ArrayList<Tache> list, boolean checkbox) {
             super(context, resource, list);
-            this.tacheList=list;//new ArrayList<>();
+            this.tacheList=list;
             this.checkbox=checkbox;
-            //tacheList.addAll(list);
         }
 
         private class ViewHolder {
@@ -201,7 +204,7 @@ public class Home extends AppCompatActivity {
                 }
 
                 Tache tache = tacheList.get(position);
-                holder.code.setText(" (" + tache.getNom() + ")");
+                holder.code.setText("  "+tache.getDate());
                 holder.name.setText(tache.getNom());
                 holder.name.setChecked(tache.getChecked());
                 holder.name.setTag(tache);
@@ -222,7 +225,7 @@ public class Home extends AppCompatActivity {
                 }
 
                 Tache tache = tacheList.get(position);
-                holder.txt.setText(tache.getNom()+" "+ tache.getDate());
+                holder.txt.setText(tache.getNom()+" Date : "+ tache.getDate());
                 holder.txt.setTag(tache);
             }
 
