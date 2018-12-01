@@ -65,23 +65,101 @@ public class DBTache {
         return taches;
     }
 
-    public ArrayList<String> getAllNomTaches() {
-        ArrayList<String> taches = new ArrayList<String>();
+    public ArrayList<Tache> getAllTachesByDate() {
+        ArrayList<Tache> taches = new ArrayList<Tache>();
 
         Cursor cursor = database.query(DBHelper.TABLE_TACHE,
-                allColumns, null, null, null, null, null);
+                allColumns, null, null, null, null, DBHelper.COLUMN_DATE+" DESC");
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Tache t = cursorToTache(cursor);
-            taches.add(t.getNom());
+            taches.add(t);
             cursor.moveToNext();
         }
         cursor.close();
         return taches;
     }
 
+    public ArrayList<Tache> getAllTachesByDeadlin() {
+        ArrayList<Tache> taches = new ArrayList<Tache>();
 
+        Cursor cursor = database.query(DBHelper.TABLE_TACHE,
+                allColumns, null, null, null, null, DBHelper.COLUMN_DEADLINE+" DESC");
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Tache t = cursorToTache(cursor);
+            taches.add(t);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return taches;
+    }
+
+    public ArrayList<Tache> getAllTachesByLieu() {
+        ArrayList<Tache> taches = new ArrayList<Tache>();
+
+        Cursor cursor = database.query(DBHelper.TABLE_TACHE,
+                allColumns, null, null, DBHelper.COLUMN_LIEU, null, DBHelper.COLUMN_DEADLINE+" DESC");
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Tache t = cursorToTache(cursor);
+            taches.add(t);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return taches;
+    }
+
+    public ArrayList<Tache> getAllTachesByPriorite() {
+        ArrayList<Tache> taches = new ArrayList<Tache>();
+
+        Cursor cursor = database.query(DBHelper.TABLE_TACHE,
+                allColumns, null, null, DBHelper.COLUMN_PRIORITE, null, DBHelper.COLUMN_DEADLINE+" DESC");
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Tache t = cursorToTache(cursor);
+            taches.add(t);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return taches;
+    }
+
+    public ArrayList<Tache> getAllTachesByStatu() {
+        ArrayList<Tache> taches = new ArrayList<Tache>();
+
+        Cursor cursor = database.query(DBHelper.TABLE_TACHE,
+                allColumns, null, null, DBHelper.COLUMN_STATU, null, DBHelper.COLUMN_DEADLINE+" DESC");
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Tache t = cursorToTache(cursor);
+            taches.add(t);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return taches;
+    }
+
+    public ArrayList<Tache> getAllTachesByTheme() {
+        ArrayList<Tache> taches = new ArrayList<Tache>();
+
+        Cursor cursor = database.query(DBHelper.TABLE_TACHE,
+                allColumns, null, null, DBHelper.COLUMN_THEME, null, DBHelper.COLUMN_DEADLINE+" DESC");
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            Tache t = cursorToTache(cursor);
+            taches.add(t);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return taches;
+    }
 
     private Tache cursorToTache(Cursor cursor) {
         Tache t = new Tache();
