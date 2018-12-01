@@ -18,7 +18,7 @@ public class Setting extends Activity {
         setContentView(R.layout.setting);
 
         radio=findViewById(R.id.radio);
-
+        radio.clearCheck();
     }
 
     public void onClickHome(View v){
@@ -27,7 +27,8 @@ public class Setting extends Activity {
     }
 
     public void onClickValider(View v){
-
+        int s = radio.getCheckedRadioButtonId();
+        
 
         Intent intent = new Intent(this, Home.class);
         startActivity(intent);
