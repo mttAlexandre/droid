@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -89,7 +90,7 @@ public class Home extends AppCompatActivity {
                 res=dbt.getAllTachesByStatu();
                 break;
             default:
-                res=dbt.getAllTaches();   
+                res=dbt.getAllTaches();
         }
         return res;
     }
@@ -165,8 +166,11 @@ public class Home extends AppCompatActivity {
 
     public void onClickAdd(View v){
         Tache t;
-        t = dbt.createTache("testX");
+        t= new Tache("t1","desc", Tache.Theme.maison, "paris", Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), Tache.Statu.todo, Tache.Priorite.medium, null);
+        t = dbt.createTache(t.getNom());
         dataAdapter.add(t);
+
+
     }
 
     public void onListItemClick(ListView l, View v, int position, long id) {
