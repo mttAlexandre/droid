@@ -75,5 +75,9 @@ public class Tache { //FORME DE LA FREQUENCE A REVOIR
     public void setChecked(boolean c){
         checked=c;
     }
+
+    public Date getDate(){
+        return this.date;
+    }
 }
 

@@ -44,7 +44,7 @@ public class Home extends AppCompatActivity {
 
         values = dbt.getAllTaches();
         dataAdapter = new MyCustomAdapter(this,
-                R.layout.checkitem, values);
+                R.layout.checkitem, values, false);
 
         hlv.setAdapter(dataAdapter);
     }
@@ -98,6 +98,8 @@ public class Home extends AppCompatActivity {
     public void onClickDelete(View v){
         if(!checkbox) {
             checkbox=true;
+            dataAdapter.checkbox=true;
+            dataAdapter.notifyDataSetChanged();
             /*
             List<String> values = dbt.getAllNomTaches();
             //List<Item> res = null;//Item.tacheToItem(values);
@@ -108,6 +110,17 @@ public class Home extends AppCompatActivity {
             */
         }else{
             checkbox=false;
+            ArrayList<Tache> tacheList = dataAdapter.tacheList;
+            ArrayList<Tache> toDelete = new ArrayList<Tache>();
+            for(int i=0;i<tacheList.size();i++){
+                Tache tache = tacheList.get(i);
+                if(tache.getChecked()){
+                    dbt.deleteTache(tache);
+                    toDelete.add(tache);
+                }
+            }
+            dataAdapter.checkbox=false;
+            dataAdapter.deleteAll(toDelete);
             /*
             List<String> values = dbt.getAllNomTaches();
             adapter = new ArrayAdapter<String>(this,
@@ -125,6 +138,9 @@ public class Home extends AppCompatActivity {
 
     public void onListItemClick(ListView l, View v, int position, long id) {
         //aller à la page détail et afficher l'item cliqué
+        Tache t = dataAdapter.tacheList.get(position);
+        Intent intent = new Intent(this, Detail.class);
+        startActivity(intent);
     }
 
 
@@ -134,10 +150,12 @@ public class Home extends AppCompatActivity {
     private class MyCustomAdapter extends ArrayAdapter<Tache>{
 
         private ArrayList<Tache> tacheList;
+        private boolean checkbox;
 
-        public MyCustomAdapter(Context context, int resource, ArrayList<Tache> list) {
+        public MyCustomAdapter(Context context, int resource, ArrayList<Tache> list, boolean checkbox) {
             super(context, resource, list);
             this.tacheList=list;//new ArrayList<>();
+            this.checkbox=checkbox;
             //tacheList.addAll(list);
         }
 
@@ -146,43 +164,67 @@ public class Home extends AppCompatActivity {
             CheckBox name;
         }
 
+        private class ViewHolder2 {
+            TextView txt;
+        }
+
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            ViewHolder holder = null;
-            Log.v("ConvertView", String.valueOf(position));
+            if(checkbox) {
+                ViewHolder holder = null;
+                Log.v("ConvertView", String.valueOf(position));
 
-            if (convertView == null) {
-                LayoutInflater vi = (LayoutInflater)getSystemService(
-                        Context.LAYOUT_INFLATER_SERVICE);
-                convertView = vi.inflate(R.layout.checkitem, null);
+                if (convertView == null) {
+                    LayoutInflater vi = (LayoutInflater) getSystemService(
+                            Context.LAYOUT_INFLATER_SERVICE);
+                    convertView = vi.inflate(R.layout.checkitem, null);
 
-                holder = new ViewHolder();
-                holder.code = convertView.findViewById(R.id.code);
-                holder.name = convertView.findViewById(R.id.checkBox1);
-                convertView.setTag(holder);
+                    holder = new ViewHolder();
+                    holder.code = convertView.findViewById(R.id.code);
+                    holder.name = convertView.findViewById(R.id.checkBox1);
+                    convertView.setTag(holder);
 
-                holder.name.setOnClickListener( new View.OnClickListener() {
-                    public void onClick(View v) {
-                        CheckBox cb = (CheckBox) v ;
-                        Tache tache = (Tache) cb.getTag();
-                        Toast.makeText(getApplicationContext(),
-                                "Clicked on Checkbox: " + cb.getText() +
-                                        " is " + cb.isChecked(),
-                                Toast.LENGTH_LONG).show();
-                        tache.setChecked(cb.isChecked());
-                    }
-                });
+                    holder.name.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            CheckBox cb = (CheckBox) v;
+                            Tache tache = (Tache) cb.getTag();
+                            Toast.makeText(getApplicationContext(),
+                                    "Clicked on Checkbox: " + cb.getText() +
+                                            " is " + cb.isChecked(),
+                                    Toast.LENGTH_LONG).show();
+                            tache.setChecked(cb.isChecked());
+                        }
+                    });
+                } else {
+                    holder = (ViewHolder) convertView.getTag();
+                }
+
+                Tache tache = tacheList.get(position);
+                holder.code.setText(" (" + tache.getNom() + ")");
+                holder.name.setText(tache.getNom());
+                holder.name.setChecked(tache.getChecked());
+                holder.name.setTag(tache);
+            }else{
+                ViewHolder2 holder = null;
+                Log.v("ConvertView", String.valueOf(position));
+
+                if (convertView == null) {
+                    LayoutInflater vi = (LayoutInflater) getSystemService(
+                            Context.LAYOUT_INFLATER_SERVICE);
+                    convertView = vi.inflate(R.layout.item, null);
+
+                    holder = new ViewHolder2();
+                    holder.txt = convertView.findViewById(R.id.txt);
+                    convertView.setTag(holder);
+                } else {
+                    holder = (ViewHolder2) convertView.getTag();
+                }
+
+                Tache tache = tacheList.get(position);
+                holder.txt.setText(tache.getNom()+" "+ tache.getDate());
+                holder.txt.setTag(tache);
             }
-            else {
-                holder = (ViewHolder) convertView.getTag();
-            }
-
-            Tache tache = tacheList.get(position);
-            holder.code.setText(" (" +  tache.getNom() + ")");
-            holder.name.setText(tache.getNom());
-            holder.name.setChecked(tache.getChecked());
-            holder.name.setTag(tache);
 
             return convertView;
         }
@@ -193,6 +235,15 @@ public class Home extends AppCompatActivity {
             notifyDataSetChanged();
         }
 
+        public void delete(Tache t) {
+            tacheList.remove(t);
+            notifyDataSetChanged();
+        }
+
+        public void deleteAll(ArrayList<Tache> l) {
+            tacheList.removeAll(l);
+            notifyDataSetChanged();
+        }
     }
 
     /*private void checkButtonClick() {
