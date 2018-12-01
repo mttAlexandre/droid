@@ -28,7 +28,7 @@ public class Setting extends Activity {
 
     public void onClickValider(View v){
         int s = radio.getCheckedRadioButtonId();
-        
+
 
         Intent intent = new Intent(this, Home.class);
         startActivity(intent);
