@@ -9,6 +9,8 @@ public class Tache { //FORME DE LA FREQUENCE A REVOIR
     private String lieu;
     private Date date;
     private Date deadline;
+
+
     enum Statu {
         todo,
         done
@@ -60,24 +62,84 @@ public class Tache { //FORME DE LA FREQUENCE A REVOIR
         this.id = id;
     }
 
+    public String getNom() {
+        return nom;
+    }
+
     public void setNom(String nom) {
         this.nom = nom;
     }
 
-    public String getNom(){
-        return nom;
+    public String getDescription() {
+        return description;
     }
 
-    public boolean getChecked(){
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getLieu() {
+        return lieu;
+    }
+
+    public void setLieu(String lieu) {
+        this.lieu = lieu;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
+    }
+
+    public Statu getStatu() {
+        return statu;
+    }
+
+    public void setStatu(Statu statu) {
+        this.statu = statu;
+    }
+
+    public Priorite getPriorite() {
+        return priorite;
+    }
+
+    public void setPriorite(Priorite priorite) {
+        this.priorite = priorite;
+    }
+
+    public Theme getTheme() {
+        return theme;
+    }
+
+    public void setTheme(Theme theme) {
+        this.theme = theme;
+    }
+
+    public Date getFrequence() {
+        return frequence;
+    }
+
+    public void setFrequence(Date frequence) {
+        this.frequence = frequence;
+    }
+
+    public boolean isChecked() {
         return checked;
     }
 
-    public void setChecked(boolean c){
-        checked=c;
-    }
-
-    public Date getDate(){
-        return this.date;
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 }
 

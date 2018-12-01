@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RadioGroup;
 
-// MAXIME : "PAGE DEU SETTINGS" BREF ON VERRA APRES POUR LE DESIGNE ET LES DIFFERENTES MODIF
 
 public class Setting extends Activity {
 

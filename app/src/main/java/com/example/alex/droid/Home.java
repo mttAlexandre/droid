@@ -115,7 +115,7 @@ public class Home extends AppCompatActivity {
             ArrayList<Tache> toDelete = new ArrayList<Tache>();
             for(int i=0;i<tacheList.size();i++){
                 Tache tache = tacheList.get(i);
-                if(tache.getChecked()){
+                if(tache.isChecked()){
                     dbt.deleteTache(tache);
                     toDelete.add(tache);
                 }
@@ -155,6 +155,12 @@ public class Home extends AppCompatActivity {
 
         private ArrayList<Tache> tacheList;
         private boolean checkbox;
+        private boolean showDate;
+        private boolean showDead;
+        private boolean showPrio;
+        private boolean showLieu;
+        private boolean showTheme;
+        private boolean showStatu;
 
         public MyCustomAdapter(Context context, int resource, ArrayList<Tache> list, boolean checkbox) {
             super(context, resource, list);
@@ -206,7 +212,7 @@ public class Home extends AppCompatActivity {
                 Tache tache = tacheList.get(position);
                 holder.code.setText("  "+tache.getDate());
                 holder.name.setText(tache.getNom());
-                holder.name.setChecked(tache.getChecked());
+                holder.name.setChecked(tache.isChecked());
                 holder.name.setTag(tache);
             }else{
                 ViewHolder2 holder = null;
@@ -225,7 +231,7 @@ public class Home extends AppCompatActivity {
                 }
 
                 Tache tache = tacheList.get(position);
-                holder.txt.setText(tache.getNom()+" Date : "+ tache.getDate());
+                holder.txt.setText(getText(tache));//tache.getNom()+" Date : "+ tache.getDate());
                 holder.txt.setTag(tache);
             }
 
@@ -246,6 +252,26 @@ public class Home extends AppCompatActivity {
         public void deleteAll(ArrayList<Tache> l) {
             tacheList.removeAll(l);
             notifyDataSetChanged();
+        }
+
+        public String getText(Tache t){
+            String s="";
+            s+=t.getNom()+" ";
+
+            if(this.showDate){
+                s+=t.getDate()+" ";
+            }else if(this.showDead){
+                s+=t.getDeadline()+" ";
+            }else if(this.showLieu){
+                s+=t.getLieu()+" ";
+            }else if(this.showPrio){
+                s+=t.getPriorite()+" ";
+            }else if(this.showStatu){
+                s+=t.getStatu()+" ";
+            }else if(this.showTheme){
+                s+=t.getTheme()+" ";
+            }
+            return s;
         }
     }
 
