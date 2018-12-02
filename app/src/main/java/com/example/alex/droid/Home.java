@@ -121,37 +121,40 @@ public class Home extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onClickDelete(View v){
-        if(!checkbox) {
-            checkbox=true;
-            dataAdapter = new MyCustomAdapter(this,
-                    R.layout.checkitem, values, true);
-            hlv.setAdapter(dataAdapter);
-        }else{
-            checkbox=false;
-            ArrayList<Tache> tacheList = dataAdapter.tacheList;
-            ArrayList<Tache> toDelete = new ArrayList<Tache>();
-            for(int i=0;i<tacheList.size();i++){
-                Tache tache = tacheList.get(i);
-                if(tache.isChecked()){
-                    dbt.deleteTache(tache);
-                    toDelete.add(tache);
+    public void onClickDelete(View v) {
+        if (values.isEmpty()) {
+            Toast.makeText(getApplicationContext(),"Il n'y a rien à supprimer",Toast.LENGTH_LONG).show();
+        } else {
+            if (!checkbox) {
+                checkbox = true;
+                dataAdapter = new MyCustomAdapter(this,
+                        R.layout.checkitem, values, true);
+                hlv.setAdapter(dataAdapter);
+            } else {
+                checkbox = false;
+                ArrayList<Tache> tacheList = dataAdapter.tacheList;
+                ArrayList<Tache> toDelete = new ArrayList<Tache>();
+                for (int i = 0; i < tacheList.size(); i++) {
+                    Tache tache = tacheList.get(i);
+                    if (tache.isChecked()) {
+                        dbt.deleteTache(tache);
+                        toDelete.add(tache);
+                    }
                 }
-            }
-            dataAdapter.deleteAll(toDelete);
+                dataAdapter.deleteAll(toDelete);
 
-            dataAdapter = new MyCustomAdapter(this,
-                    R.layout.item, values, false);
-            hlv.setAdapter(dataAdapter);
+                dataAdapter = new MyCustomAdapter(this,
+                        R.layout.item, values, false);
+                hlv.setAdapter(dataAdapter);
             /*
             List<String> values = dbt.getAllNomTaches();
             adapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_list_item_1, values);
             hlv.setAdapter(adapter);
             */
+            }
         }
     }
-
     public void onClickAdd(View v){
         Tache t;
         t= new Tache("t1","desc", Tache.Theme.maison, "paris", Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), Tache.Statut.todo, Tache.Priorite.medium, null);

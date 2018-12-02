@@ -81,10 +81,10 @@
 
             <RadioButton
                 android:id="@+id/radioStatu"
-                android:layout_width="wrap_content"
+                android:layout_width="77dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Statu" />
+                android:text="Statut" />
 
         </RadioGroup>
 
