@@ -1,8 +1,9 @@
 package com.example.alex.droid;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Tache { //FORME DE LA FREQUENCE A REVOIR
+public class Tache implements Serializable { //FORME DE LA FREQUENCE A REVOIR
     private long id;
     private String nom;
     private String description;
@@ -11,11 +12,11 @@ public class Tache { //FORME DE LA FREQUENCE A REVOIR
     private Date deadline;
 
 
-    enum Statu {
+    enum Statut {
         todo,
         done
     }
-    private Statu statu;
+    private Statut statut;
     enum Priorite {
         high,
         medium,
@@ -42,14 +43,14 @@ public class Tache { //FORME DE LA FREQUENCE A REVOIR
         this.nom=nom;
     }
 
-    public Tache(String nom, String description, Theme theme, String lieu, Date date, Date deadline, Statu statu, Priorite priorite, Date frequence){
+    public Tache(String nom, String description, Theme theme, String lieu, Date date, Date deadline, Statut statut, Priorite priorite, Date frequence){
         this.nom=nom;
         this.description=description;
         this.theme=theme;
         this.lieu=lieu;
         this.date=date;
         this.deadline=deadline;
-        this.statu=statu;
+        this.statut = statut;
         this.priorite=priorite;
         this.frequence=frequence;
     }
@@ -102,12 +103,12 @@ public class Tache { //FORME DE LA FREQUENCE A REVOIR
         this.deadline = deadline;
     }
 
-    public Statu getStatu() {
-        return statu;
+    public Statut getStatut() {
+        return statut;
     }
 
-    public void setStatu(Statu statu) {
-        this.statu = statu;
+    public void setStatut(Statut statut) {
+        this.statut = statut;
     }
 
     public Priorite getPriorite() {

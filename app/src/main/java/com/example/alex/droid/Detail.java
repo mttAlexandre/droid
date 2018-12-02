@@ -27,8 +27,12 @@ public class Detail extends Activity{
         this.lieu = findViewById(R.id.taskplace);
         this.date = findViewById(R.id.taskdate);
         this.deadline = findViewById(R.id.taskdeadline);
-        //Fetch la task avec id ??
-        // assigner chaque champs correspondant
+        Tache t = (Tache) getIntent().getSerializableExtra("Tache");
+        this.nom.setText(t.getNom());
+        this.description.setText(t.getDescription());
+        this.lieu.setText(t.getLieu());
+        this.date.setText(t.getDate().toString());
+        this.deadline.setText(t.getDeadline().toString());
         //Après on verra bismila
     }
 

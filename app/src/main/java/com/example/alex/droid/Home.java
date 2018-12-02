@@ -1,9 +1,7 @@
 package com.example.alex.droid;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,9 +16,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
 
 public class Home extends AppCompatActivity {
 
@@ -106,7 +100,9 @@ public class Home extends AppCompatActivity {
         //setContentView(R.layout.detail);
         // ÇA C'EST PAREIL MAIS ÇA CHARGE LES ÉLÉMENTS DYNAMIC EN PLUS (COMME LE CONTENU DE LA LISTVIEW POUR CLICKHOME) et il
         // faut remettre un OnCreate dans touts les classes du coup
+        Tache test = new Tache("TestDétail","tache test pour la page de détail", Tache.Theme.travail,"RAMBOUILLET",Calendar.getInstance().getTime(),Calendar.getInstance().getTime(),Tache.Statut.done,Tache.Priorite.high, null);
         Intent intent = new Intent(this, Detail.class);
+        intent.putExtra("Tache",test);
         startActivity(intent);
     }
 
@@ -131,14 +127,6 @@ public class Home extends AppCompatActivity {
             dataAdapter = new MyCustomAdapter(this,
                     R.layout.checkitem, values, true);
             hlv.setAdapter(dataAdapter);
-            /*
-            List<String> values = dbt.getAllNomTaches();
-            //List<Item> res = null;//Item.tacheToItem(values);
-            adapter = new ArrayAdapter<String>(this,
-                    R.layout.checkitem, values);
-            hlv.setAdapter(adapter);
-            //adapter.notifyDataSetChanged();
-            */
         }else{
             checkbox=false;
             ArrayList<Tache> tacheList = dataAdapter.tacheList;
@@ -166,7 +154,7 @@ public class Home extends AppCompatActivity {
 
     public void onClickAdd(View v){
         Tache t;
-        t= new Tache("t1","desc", Tache.Theme.maison, "paris", Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), Tache.Statu.todo, Tache.Priorite.medium, null);
+        t= new Tache("t1","desc", Tache.Theme.maison, "paris", Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), Tache.Statut.todo, Tache.Priorite.medium, null);
         t = dbt.createTache(t.getNom());
         dataAdapter.add(t);
 
@@ -176,6 +164,10 @@ public class Home extends AppCompatActivity {
     public void onListItemClick(ListView l, View v, int position, long id) {
         //aller à la page détail et afficher l'item cliqué
         Tache t = dataAdapter.tacheList.get(position);
+        System.out.println("JE SUIS LA ");
+        if(t == null){
+            System.out.println("C NULL");
+        }
         Intent intent = new Intent(this, Detail.class);
         startActivity(intent);
     }
@@ -300,7 +292,7 @@ public class Home extends AppCompatActivity {
             }else if(this.showPrio){
                 s+=t.getPriorite()+" ";
             }else if(this.showStatu){
-                s+=t.getStatu()+" ";
+                s+=t.getStatut()+" ";
             }else if(this.showTheme){
                 s+=t.getTheme()+" ";
             }
