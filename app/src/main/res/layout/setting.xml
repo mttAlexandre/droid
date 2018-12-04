@@ -59,7 +59,7 @@
                 android:text="Deadline" />
 
             <RadioButton
-                android:id="@+id/radioPrio"
+                android:id="@+id/radioPrioS"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -73,14 +73,14 @@
                 android:text="Lieu" />
 
             <RadioButton
-                android:id="@+id/radioTheme"
+                android:id="@+id/radioThemeS"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Thème" />
 
             <RadioButton
-                android:id="@+id/radioStatu"
+                android:id="@+id/radioStatutS"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

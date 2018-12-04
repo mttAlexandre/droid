@@ -9,7 +9,7 @@ import android.widget.RadioGroup;
 
 public class Setting extends Activity {
 
-    RadioGroup radio;
+    private RadioGroup radio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
