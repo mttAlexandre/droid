@@ -3,13 +3,16 @@ package com.example.alex.droid;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 // FORM POUR MODIFIER UNE TACHE, OU LA SUPPRIMER
 
-public class Modify extends Activity {
+public class Modify extends AppCompatActivity {
 
     private TextView nom;
     private TextView desc;
@@ -20,15 +23,25 @@ public class Modify extends Activity {
     private TextView date;
     private TextView dead;
     private RadioGroup frequence;
+    private DatePicker datepicker;
+    private DatePicker deadlinepicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.modify);
 
-        nom=findViewById(R.id.modifyNomInput);
-        nom.clearComposingText();
-        desc=findViewById(R.id.modifyDescInput);
+
+        this.datepicker = findViewById(R.id.datepicker);
+
+        this.deadlinepicker = findViewById(R.id.deadlinepicker);
+        //RECUPERER LA DATE AU FORMAT DATE (Passer par un OnDateChangeListener)
+
+
+        //TODO Faire un "select" pour savoir si on veut une deadline ou non, afficher le Datepicker ou non en fonction
+
+        /*this.nom=(EditText)findViewById(R.id.modifyNomInput);
+        /*desc=findViewById(R.id.modifyDescInput);
         desc.clearComposingText();
         lieu=findViewById(R.id.modifyLieuInput);
         lieu.clearComposingText();
@@ -43,7 +56,7 @@ public class Modify extends Activity {
         dead=findViewById(R.id.modifyDeadInput);
         dead.clearComposingText();
         frequence=findViewById(R.id.modifyFrequenceInput);
-        frequence.clearCheck();
+        frequence.clearCheck();*/
     }
 
     public void onClickHome(View v){
@@ -68,6 +81,7 @@ public class Modify extends Activity {
         // et il faut transformer les radio bouttons en enun avec des switch mais fais date en prio
 
         // a toi boby pour date et deadline :
+
         //t.setDate(date....);
         //t.setDeadline(dead....);
 
