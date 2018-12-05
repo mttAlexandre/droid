@@ -16,10 +16,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Detail"/>
-        <activity android:name=".CalendarTask"/>
-        <activity android:name=".Setting"/>
-        <activity android:name=".Modify"/>
+        <activity android:name=".Detail" />
+        <activity android:name=".CalendarTask" />
+        <activity android:name=".Setting" />
+        <activity android:name=".Modify" />
+
+        <receiver android:name=".ToDoWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/to_do_widget_info" />
+        </receiver>
+
+        <activity android:name=".ToDoWidgetConfigureActivity">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
