@@ -2,15 +2,16 @@ package com.example.alex.droid;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -57,11 +58,13 @@ public class CalendarTask extends AppCompatActivity {
         FragmentCalendar2 m2 = FragmentCalendar2.newInstance(this, cal);
         FragmentCalendar3 m3 = FragmentCalendar3.newInstance(this, calUnd);
 
-        Log.e("coucou3", "bef : " + m1.getCalendar().get(Calendar.MONTH) + "; und : " + m3.getCalendar().get(Calendar.MONTH));
-
         tabFrag[0] = m1;
         tabFrag[1] = m2;
         tabFrag[2] = m3;
+
+        TextView title = (TextView) findViewById(R.id.calendarDateBar);
+
+        title.setText(getMonth(cal.get(Calendar.MONTH)) + " " + cal.get(Calendar.YEAR));
 
         mViewPager = (ViewPager) findViewById(R.id.viewPagerCalendar);
         mPageFragment = new PageFragment(getSupportFragmentManager());
@@ -99,6 +102,7 @@ public class CalendarTask extends AppCompatActivity {
                         ((FragmentCalendar3)tabFrag[2]).setCalendar(calUnd);
 
                         mPageFragment.notifyDataSetChanged();
+
                     }
 
                     if(mViewPager.getCurrentItem() == 0){
@@ -117,9 +121,47 @@ public class CalendarTask extends AppCompatActivity {
                         mPageFragment.notifyDataSetChanged();
 
                     }
+
+                    TextView title = (TextView) findViewById(R.id.calendarDateBar);
+                    title.setText(getMonth(cal.get(Calendar.MONTH)) + " " + cal.get(Calendar.YEAR));
                 }
             }
         });
+    }
+
+    public void onClickHome(View v){
+        Intent intent = new Intent(this, Home.class);
+        startActivity(intent);
+    }
+
+    public String getMonth(int month){
+        switch (month){
+            default:
+            case 0:
+                return "Janvier";
+            case 1:
+                return "Février";
+            case 2:
+                return "Mars";
+            case 3:
+                return "Avril";
+            case 4:
+                return "Mai";
+            case 5:
+                return "Juin";
+            case 6:
+                return "Juillet";
+            case 7:
+                return "Août";
+            case 8:
+                return "Septembre";
+            case 9:
+                return "Octobre";
+            case 10:
+                return "Novembre";
+            case 11:
+                return "Décembre";
+        }
     }
 
     public class PageFragment extends FragmentStatePagerAdapter {
