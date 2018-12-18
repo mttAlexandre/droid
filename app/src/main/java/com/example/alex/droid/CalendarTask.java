@@ -3,6 +3,14 @@ package com.example.alex.droid;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -15,229 +23,132 @@ import static android.view.Gravity.AXIS_PULL_BEFORE;
 
 // GAGA TU TE DEBROUILLES POUR ÇA ;)
 
-public class CalendarTask extends Activity {
+public class CalendarTask extends AppCompatActivity {
 
-    private java.util.Calendar cal = java.util.Calendar.getInstance(Locale.FRANCE);
-    private Context cont = this;
+    protected Context cont = this;
+
+    Fragment[] tabFrag = new Fragment[3];
+
+    ViewPager mViewPager;
+    PageFragment mPageFragment;
+
+    Context context = this;
+
+    Calendar cal = Calendar.getInstance(Locale.FRANCE);
+    Calendar calBef = Calendar.getInstance(Locale.FRANCE);
+    Calendar calUnd = Calendar.getInstance(Locale.FRANCE);
+
+    int counter = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar);
 
-        if(savedInstanceState != null && savedInstanceState.containsKey("calendarInMilli"))
-            cal.setTimeInMillis(savedInstanceState.getLong("calendarInMilli"));
+        //calBef = (Calendar) cal.clone();
+        //calBef.set(Calendar.MONTH, calBef.get(Calendar.MONTH)-1);
+        calBef.add(Calendar.MONTH, -1);
 
-        makeCalendar();
-    }
+        ///calUnd = (Calendar) cal.clone();
+        //calUnd.set(Calendar.MONTH, calUnd.get(Calendar.MONTH)+1);
+        calUnd.add(Calendar.MONTH, 1);
 
-    private void makeCalendar(){
-        Calendar mcal = (Calendar) cal.clone();
-        mcal.set(Calendar.DAY_OF_MONTH, 1);
-        int compteurJour = 1;
+        FragmentCalendar1 m1 = FragmentCalendar1.newInstance(this, calBef);
+        FragmentCalendar2 m2 = FragmentCalendar2.newInstance(this, cal);
+        FragmentCalendar3 m3 = FragmentCalendar3.newInstance(this, calUnd);
 
-        TableLayout lay = findViewById(R.id.layoutButton);
-        for(int j = 0; j < 6; j++){
+        Log.e("coucou3", "bef : " + m1.getCalendar().get(Calendar.MONTH) + "; und : " + m3.getCalendar().get(Calendar.MONTH));
 
-            int dayMax = mcal.getActualMaximum(Calendar.DAY_OF_MONTH);
-            int parcours = dayMax - compteurJour + 1;
+        tabFrag[0] = m1;
+        tabFrag[1] = m2;
+        tabFrag[2] = m3;
 
-            boolean testExe = true;
+        mViewPager = (ViewPager) findViewById(R.id.viewPagerCalendar);
+        mPageFragment = new PageFragment(getSupportFragmentManager());
 
-            if(parcours >= 7)
-                parcours = 7;
+        mViewPager.setAdapter(mPageFragment);
+        mViewPager.setCurrentItem(1);
 
-            if(j == 5 && parcours == 0)
-                testExe = false;
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener(){
 
-            if(testExe){
-                TableRow tr = new TableRow(cont);
-                tr.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.MATCH_PARENT, (float) 0.2 ));
-                tr.setId(j);
-                lay.addView(tr);
-                if(j == 0){
-                    int firstDay;
-                    switch(mcal.get(Calendar.DAY_OF_WEEK)){
-                        case 1:
-                            firstDay = 6;
-                            break;
-                        case 2:
-                        default:
-                            firstDay = 0;
-                            break;
-                        case 3:
-                            firstDay = 1;
-                            break;
-                        case 4:
-                            firstDay = 2;
-                            break;
-                        case 5:
-                            firstDay = 3;
-                            break;
-                        case 6:
-                            firstDay = 4;
-                            break;
-                        case 7:
-                            firstDay = 5;
-                            break;
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+                if(i == ViewPager.SCROLL_STATE_IDLE){
+                    if(mViewPager.getCurrentItem() == 2){
+
+                        calBef.add(Calendar.MONTH, 1);
+                        ((FragmentCalendar1)tabFrag[0]).setCalendar(calBef);
+                        cal.add(Calendar.MONTH, 1);
+                        ((FragmentCalendar2)tabFrag[1]).setCalendar(cal);
+
+                        mPageFragment.notifyDataSetChanged();
+                        mViewPager.setCurrentItem(1, false);
+
+                        calUnd.add(Calendar.MONTH, 1);
+                        ((FragmentCalendar3)tabFrag[2]).setCalendar(calUnd);
+
+                        mPageFragment.notifyDataSetChanged();
                     }
 
-                    for(int i = 0; i < firstDay; i++){
-                        TextView b = new TextView(cont);
-                        b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT, (float) 0.14));
-                        b.setId(i);
-                        b.setText("");
-                        //b.setGravity(AXIS_PULL_BEFORE);
-                        //b.setSingleLine(true);
-                        b.setPadding(5, 0, 0, 0);
-                        //b.setTextSize(10);
-                        //b.setEllipsize(TextUtils.TruncateAt.END);
+                    if(mViewPager.getCurrentItem() == 0){
 
-                        b.setBackgroundResource(R.drawable.no_button);
+                        calUnd.add(Calendar.MONTH, -1);
+                        ((FragmentCalendar3)tabFrag[2]).setCalendar(calUnd);
+                        cal.add(Calendar.MONTH, -1);
+                        ((FragmentCalendar2)tabFrag[1]).setCalendar(cal);
 
-                        tr.addView(b);
-                    }
+                        mPageFragment.notifyDataSetChanged();
+                        mViewPager.setCurrentItem(1, false);
 
-                    for(int i = firstDay; i < 7; i++){
-                        Button b = new Button(cont);
+                        calBef.add(Calendar.MONTH, -1);
+                        ((FragmentCalendar1)tabFrag[0]).setCalendar(calBef);
 
-                        mcal.set(Calendar.DAY_OF_MONTH, compteurJour);
-                        compteurJour++;
-
-                        b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT, (float) 0.14));
-                        b.setId(i);
-                        b.setText("" + mcal.get(Calendar.DAY_OF_MONTH));
-                        b.setGravity(AXIS_PULL_BEFORE);
-                        b.setSingleLine(true);
-                        b.setPadding(5, 0, 0, 0);
-                        b.setTextSize(10);
-
-                        //b.setEllipsize(TextUtils.TruncateAt.END);
-
-
-
-                        b.setBackgroundResource(R.drawable.button_border);
-
-                        tr.addView(b);
-                    }
-
-                }
-                else if(j == 4 || j == 5){
-
-
-
-                    for(int i = 0; i < parcours; i++){
-                        Button b = new Button(cont);
-
-                        mcal.set(Calendar.DAY_OF_MONTH, compteurJour);
-                        compteurJour++;
-
-                        b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT, (float) 0.14));
-                        b.setId(i);
-                        b.setText("" + mcal.get(Calendar.DAY_OF_MONTH));
-                        b.setGravity(AXIS_PULL_BEFORE);
-                        b.setSingleLine(true);
-                        b.setPadding(5, 0, 0, 0);
-                        b.setTextSize(10);
-
-                        //b.setEllipsize(TextUtils.TruncateAt.END);
-
-
-
-                        b.setBackgroundResource(R.drawable.button_border);
-
-                        tr.addView(b);
-                    }
-
-                    for(int i = parcours; i < 7; i++){
-                        TextView b = new TextView(cont);
-
-                        b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT, (float) 0.14));
-                        b.setId(i);
-                        b.setText("");
-                        //b.setGravity(AXIS_PULL_BEFORE);
-                        //b.setSingleLine(true);
-                        b.setPadding(5, 0, 0, 0);
-                        //b.setTextSize(10);
-                        //b.setEllipsize(TextUtils.TruncateAt.END);
-
-                        b.setBackgroundResource(R.drawable.no_button);
-
-                        tr.addView(b);
-                    }
-                }
-                else {
-                    for (int i = 0; i < 7; i++) {
-                        Button b = new Button(cont);
-
-                        b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT, (float) 0.14));
-                        b.setId(i);
-                        mcal.set(java.util.Calendar.DAY_OF_MONTH, compteurJour);
-                        compteurJour++;
-                        b.setText("" + mcal.get(Calendar.DAY_OF_MONTH));
-                        b.setGravity(AXIS_PULL_BEFORE);
-                        b.setSingleLine(true);
-                        b.setPadding(5, 0, 0, 0);
-                        b.setTextSize(10);
-                        //b.setEllipsize(TextUtils.TruncateAt.END);
-
-                        b.setBackgroundResource(R.drawable.button_border);
-
-                        tr.addView(b);
+                        mPageFragment.notifyDataSetChanged();
 
                     }
                 }
             }
+        });
+    }
+
+    public class PageFragment extends FragmentStatePagerAdapter {
+
+
+        public PageFragment(FragmentManager fm) {
+            super(fm);
+        }
+
+        public int getItemPosition(Object object){
+            return PageFragment.POSITION_NONE;
+        }
+
+        @Override
+        public Fragment getItem(int i) {
+            return tabFrag[i];
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
         }
     }
 
-    private String getMonthOnString(int idMonth){
-        String month;
-        switch (idMonth){
-            case 0:
-            default:
-                month = "Janvier";
-                break;
-            case 1:
-                month = "Février";
-                break;
-            case 2:
-                month = "Mars";
-                break;
-            case 3:
-                month = "Avril";
-                break;
-            case 4:
-                month = "Mai";
-                break;
-            case 5:
-                month = "Juin";
-                break;
-            case 6:
-                month = "Juillet";
-                break;
-            case 7:
-                month = "Août";
-                break;
-            case 8:
-                month = "Septembre";
-                break;
-            case 9:
-                month = "Octobre";
-                break;
-            case 10:
-                month = "Novembre";
-                break;
-            case 11:
-                month = "Décembre";
-                break;
+    public class MyViewPager extends ViewPager {
+        public MyViewPager(@NonNull Context context) {
+            super(context);
         }
-        return month;
-    }
 
-    @Override
-    public void onSaveInstanceState(Bundle saveInstanceState) {
-        super.onSaveInstanceState(saveInstanceState);
-        saveInstanceState.putLong("calendarInMilli", cal.getTimeInMillis());
+
     }
 }
