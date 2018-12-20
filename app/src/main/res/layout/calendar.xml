@@ -6,125 +6,122 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
+        android:id="@+id/toolbarCalendar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="40dp"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-2dp">
 
-        <LinearLayout
-            android:id="@+id/toolbarCalendar"
-            android:layout_width="384dp"
-            android:layout_height="35dp"
-            android:background="@color/colorPrimaryDark"
-            android:orientation="horizontal"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="-2dp">
+        <Button
+            android:id="@+id/returnHome"
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:background="?attr/actionModeCloseDrawable"
+            android:backgroundTint="@android:color/background_light"
+            android:onClick="onClickHome" />
 
-            <Button
-                android:id="@+id/returnHome"
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:background="?attr/actionModeCloseDrawable"
-                android:onClick="onClickHome"
-                android:backgroundTint="@android:color/background_light"/>
-
-            <TextView
-                android:id="@+id/calendarDateBar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="TextView"
-                android:textColor="@android:color/background_light" />
-
-        </LinearLayout>
-
-        <TableRow
-            android:id="@+id/dayLine"
+        <TextView
+            android:id="@+id/calendarDateBar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="34dp">
-
-            <TextView
-                android:id="@+id/monday"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:singleLine="true"
-                android:text="Lundi" />
-
-            <TextView
-                android:id="@+id/tuesday"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:singleLine="true"
-                android:text="Mardi" />
-
-            <TextView
-                android:id="@+id/wednesday"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:singleLine="true"
-                android:text="Mercredi" />
-
-            <TextView
-                android:id="@+id/thursday"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:singleLine="true"
-                android:text="Jeudi" />
-
-            <TextView
-                android:id="@+id/friday"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:singleLine="true"
-                android:text="Vendredi" />
-
-            <TextView
-                android:id="@+id/saturday"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:singleLine="true"
-                android:text="Samedi" />
-
-            <TextView
-                android:id="@+id/sunday"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:singleLine="true"
-                android:text="Dimanche" />
-
-        </TableRow>
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/viewPagerCalendar"
-            android:layout_width="match_parent"
-            android:layout_height="590dp"
-            app:layout_constraintTop_toBottomOf="@+id/dayLine"
-            tools:ignore="InvalidId" />
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="-40dp"
+            android:text="TextView"
+            android:textColor="@android:color/background_light"
+            android:textSize="20sp" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginTop="40dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/monday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:text="Lundi" />
+
+        <TextView
+            android:id="@+id/tuesday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:text="Mardi" />
+
+        <TextView
+            android:id="@+id/wednesday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:text="Mercredi" />
+
+        <TextView
+            android:id="@+id/thursday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:text="Jeudi" />
+
+        <TextView
+            android:id="@+id/friday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:text="Vendredi" />
+
+        <TextView
+            android:id="@+id/saturday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:text="Samedi" />
+
+        <TextView
+            android:id="@+id/sunday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:singleLine="true"
+            android:text="Dimanche" />
+
+
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPagerCalendar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="InvalidId" />
 
 </android.support.constraint.ConstraintLayout>

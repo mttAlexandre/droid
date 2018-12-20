@@ -46,6 +46,13 @@ public class CalendarTask extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar);
 
+
+        if(savedInstanceState != null && savedInstanceState.containsKey("saveDateCalendar")){
+            cal.setTimeInMillis(savedInstanceState.getLong("saveDateCalendar"));
+            calBef.setTimeInMillis(savedInstanceState.getLong("saveDateCalendar"));
+            calUnd.setTimeInMillis(savedInstanceState.getLong("saveDateCalendar"));
+        }
+
         //calBef = (Calendar) cal.clone();
         //calBef.set(Calendar.MONTH, calBef.get(Calendar.MONTH)-1);
         calBef.add(Calendar.MONTH, -1);
@@ -95,6 +102,9 @@ public class CalendarTask extends AppCompatActivity {
                         cal.add(Calendar.MONTH, 1);
                         ((FragmentCalendar2)tabFrag[1]).setCalendar(cal);
 
+                        TextView title = (TextView) findViewById(R.id.calendarDateBar);
+                        title.setText(getMonth(cal.get(Calendar.MONTH)) + " " + cal.get(Calendar.YEAR));
+
                         mPageFragment.notifyDataSetChanged();
                         mViewPager.setCurrentItem(1, false);
 
@@ -112,6 +122,9 @@ public class CalendarTask extends AppCompatActivity {
                         cal.add(Calendar.MONTH, -1);
                         ((FragmentCalendar2)tabFrag[1]).setCalendar(cal);
 
+                        TextView title = (TextView) findViewById(R.id.calendarDateBar);
+                        title.setText(getMonth(cal.get(Calendar.MONTH)) + " " + cal.get(Calendar.YEAR));
+
                         mPageFragment.notifyDataSetChanged();
                         mViewPager.setCurrentItem(1, false);
 
@@ -122,11 +135,16 @@ public class CalendarTask extends AppCompatActivity {
 
                     }
 
-                    TextView title = (TextView) findViewById(R.id.calendarDateBar);
-                    title.setText(getMonth(cal.get(Calendar.MONTH)) + " " + cal.get(Calendar.YEAR));
+
                 }
             }
         });
+    }
+
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putLong("saveDateCalendar", cal.getTimeInMillis());
     }
 
     public void onClickHome(View v){
