@@ -234,12 +234,12 @@
                 android:layout_marginTop="15dp"
                 android:text="Date : " />
 
-            <DatePicker
-                android:id="@+id/datepicker"
-                android:layout_width="338dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:headerBackground="?attr/actionModeSplitBackground" />
+            <Button
+                android:id="@+id/boutonDateTest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onClickDateButton"
+                android:text="Button" />
 
             <TextView
                 android:id="@+id/modifyDeadLine"

@@ -3,12 +3,14 @@ package com.example.alex.droid;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 // FORM POUR MODIFIER UNE TACHE, OU LA SUPPRIMER
 
@@ -31,8 +33,6 @@ public class Modify extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.modify);
 
-
-        this.datepicker = findViewById(R.id.datepicker);
 
         this.deadlinepicker = findViewById(R.id.deadlinepicker);
         //RECUPERER LA DATE AU FORMAT DATE (Passer par un OnDateChangeListener)
@@ -94,5 +94,13 @@ public class Modify extends AppCompatActivity {
 
         // retour Home
         onClickHome(v);
+    }
+
+    public void onClickDateButton(View v){
+
+
+        DialogFragment newFragment = new DateFragment();
+        newFragment.show(getSupportFragmentManager(), "date picker");
+        Toast.makeText(this,"IT WORK ! ",Toast.LENGTH_SHORT).show();
     }
 }

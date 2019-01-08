@@ -27,6 +27,7 @@ public class Detail extends Activity{
         this.lieu = findViewById(R.id.taskplace);
         this.date = findViewById(R.id.taskdate);
         this.deadline = findViewById(R.id.taskdeadline);
+
         Tache t = (Tache) getIntent().getSerializableExtra("Tache");
         this.nom.setText(t.getNom());
         this.description.setText(t.getDescription());
