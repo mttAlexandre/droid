@@ -1,5 +1,6 @@
 package com.example.alex.droid;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
@@ -27,6 +29,8 @@ public class Home extends AppCompatActivity {
 
     MyCustomAdapter dataAdapter = null;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +48,24 @@ public class Home extends AppCompatActivity {
                 R.layout.item, values, false);
 
         hlv.setAdapter(dataAdapter);
+        final Context myContxt = this;
+
+        hlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Tache tache = dataAdapter.tacheList.get(position);
+
+                if(tache == null){
+                    System.out.println("C null");
+                }
+                else{
+                    Intent intent = new Intent(myContxt,Detail.class);
+                    intent.putExtra("Tache",tache);
+                    startActivity(intent);
+                }
+
+            }
+        });
     }
 
     protected void onStart(Bundle savedInstanceState){
@@ -156,21 +178,20 @@ public class Home extends AppCompatActivity {
         }
     }
     public void onClickAdd(View v){
-        Tache t;
-        t= new Tache("t1","desc", Tache.Theme.maison, "paris", Calendar.getInstance().getTime(), Calendar.getInstance().getTime(), Tache.Statut.todo, Tache.Priorite.medium, null);
-        t = dbt.createTache(t.getNom());
-        dataAdapter.add(t);
+        Tache test = new Tache("TestDétail","tache test pour la page de détail", Tache.Theme.travail,"RAMBOUILLET",Calendar.getInstance().getTime(),Calendar.getInstance().getTime(),Tache.Statut.done,Tache.Priorite.high, null);
+        test = dbt.createTache(test.getNom());
+        dataAdapter.add(test);
 
 
     }
+
+
 
     public void onListItemClick(ListView l, View v, int position, long id) {
         //aller à la page détail et afficher l'item cliqué
         Tache t = dataAdapter.tacheList.get(position);
         System.out.println("JE SUIS LA ");
-        if(t == null){
-            System.out.println("C NULL");
-        }
+
         Intent intent = new Intent(this, Detail.class);
         startActivity(intent);
     }

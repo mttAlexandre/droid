@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:layout_editor_absoluteY="25dp">
+    tools:layout_editor_absoluteY="25dp"
+    android:background="@android:color/white">
 
     <Button
         android:id="@+id/modifyHome"
@@ -232,28 +233,38 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="Date : " />
+                android:text="Date : "
+                android:textAlignment="center" />
 
-            <Button
-                android:id="@+id/boutonDateTest"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="onClickDateButton"
-                android:text="Button" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/modifyDeadLine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="Dead line : " />
+                <Button
+                    android:id="@+id/boutonDateTest"
+                    android:layout_width="285dp"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:onClick="onClickDateButton"
+                    android:text="Button" />
 
-            <DatePicker
-                android:id="@+id/deadlinepicker"
+                <Button
+                    android:id="@+id/timeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/white"
+                    android:onClick="onClickTimeButton"
+                    android:text="Button" />
+            </LinearLayout>
+
+            <Switch
+                android:id="@+id/deadlineSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:headerBackground="@android:color/holo_red_dark" />
+                android:layout_weight="1"
+                android:text="DeadLine" />
 
             <TextView
                 android:id="@+id/modifyFrequence"

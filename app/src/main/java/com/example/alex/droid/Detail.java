@@ -32,8 +32,8 @@ public class Detail extends Activity{
         this.nom.setText(t.getNom());
         this.description.setText(t.getDescription());
         this.lieu.setText(t.getLieu());
-        this.date.setText(t.getDate().toString());
-        this.deadline.setText(t.getDeadline().toString());
+//        this.date.setText(t.getDate().toString());
+        //this.deadline.setText(t.getDeadline().toString());
         //Après on verra bismila
     }
 
