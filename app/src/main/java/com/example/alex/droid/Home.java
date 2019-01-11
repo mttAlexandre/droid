@@ -1,6 +1,5 @@
 package com.example.alex.droid;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -128,8 +127,8 @@ public class Home extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onClickModfy(View v){
-        Intent intent = new Intent(this, Modify.class);
+    public void onClickCreate(View v){
+        Intent intent = new Intent(this, CreateTask.class);
         startActivity(intent);
     }
 

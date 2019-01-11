@@ -1,7 +1,5 @@
 package com.example.alex.droid;
 
-import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -18,7 +16,7 @@ public class TimeFragment extends DialogFragment {
         Calendar c = Calendar.getInstance();
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int minute = c.get(Calendar.MINUTE);
-        return new TimePickerDialog((Modify)getActivity(),timeSetListner,hour,minute,true);
+        return new TimePickerDialog((CreateTask)getActivity(),timeSetListner,hour,minute,true);
     }
 
     private TimePickerDialog.OnTimeSetListener timeSetListner =
@@ -40,6 +38,7 @@ public class TimeFragment extends DialogFragment {
                     Toast.makeText(getActivity(),"Heure selectionnée : "+myTime,Toast.LENGTH_SHORT).show();
                 }
             };
+
     public static interface OnCompleteListener{
         public abstract void onComplete(String time);
     }

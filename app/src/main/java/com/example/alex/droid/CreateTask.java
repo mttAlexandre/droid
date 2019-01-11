@@ -1,17 +1,14 @@
 package com.example.alex.droid;
 
-import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,10 +16,12 @@ import java.util.Calendar;
 
 // FORM POUR MODIFIER UNE TACHE, OU LA SUPPRIMER
 
-public class Modify extends AppCompatActivity implements TimeFragment.OnCompleteListener,DateFragment.OnCompleteDateListener{
+public class CreateTask extends AppCompatActivity implements TimeFragment.OnCompleteListener,DateFragment.OnCompleteDateListener{
 
     public String time;
     public String myDate;
+
+    public String deadline;
 
     private TextView nom;
     private TextView desc;
@@ -33,15 +32,14 @@ public class Modify extends AppCompatActivity implements TimeFragment.OnComplete
     private TextView date;
     private TextView dead;
     private RadioGroup frequence;
-    private DatePicker datepicker;
-    private DatePicker deadlinepicker;
     private Button dateButton;
     private Button timeButton;
+    private Switch deadLineSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.modify);
+        setContentView(R.layout.create_task);
 
 
         Calendar c = Calendar.getInstance();
@@ -54,6 +52,7 @@ public class Modify extends AppCompatActivity implements TimeFragment.OnComplete
 
 
         //TODO Faire un "switch" pour savoir si on veut une deadline ou non, afficher le Datepicker ou non en fonction
+        this.deadLineSwitch = findViewById(R.id.deadlineSwitch);
 
         /*this.nom=(EditText)findViewById(R.id.modifyNomInput);
         /*desc=findViewById(R.id.modifyDescInput);
@@ -74,43 +73,54 @@ public class Modify extends AppCompatActivity implements TimeFragment.OnComplete
         frequence.clearCheck();*/
     }
 
-    public void onClickHome(View v) {
+    public void onClickCancel(View v) {
         Intent intent = new Intent(this, Home.class);
         startActivity(intent);
     }
 
-    // TEST SI LES PARAMÈTRES SONT NULL, SINON ON CRÉÉ LA TACHE AVEC ET ON LA MET EN BDD ET ON RETOURNE A HOME
-    // avec le nom comme seul paramètre obligatoire pour l'instant
-    // du coup oui tu dois transformer les string en dates et faire un try/catch pour voir si sa passe en BDD
 
-
-    public void onClickValider(View v) {
+    public void onClickSaveTask(View v){
         Tache t = new Tache();
 
         if (nom.getText() != "") {
             t.setNom(nom.getText().toString());
         } else {
-            // afficher un message d'erreur
+            Toast.makeText(this,"Donnez un nom a la tache",Toast.LENGTH_SHORT).show();
         }
         t.setDescription(desc.getText().toString());
         t.setLieu(lieu.getText().toString());
 
+
+        if(this.time != null && this.myDate!=null){
+            t.setTaskDate(myDate);
+            t.setTaskTime(time);
+
+            if(deadLineSwitch.isEnabled()){
+                t.setTaskDeadline(deadline);
+            }
+            else
+            {
+                deadline = null;
+            }
+        }
+        else
+        {
+            Toast.makeText(this,"Il faut choisir date & heure",Toast.LENGTH_SHORT).show();
+        }
+
+
         // et il faut transformer les radio bouttons en enun avec des switch mais fais date en prio
 
-        // a toi boby pour date et deadline :
 
-        //t.setDate(date....);
-        //t.setDeadline(dead....);
-
-        // on met en BDD
         try {
 
+            //Mettre en bdd
         } catch (Exception e) {
 
         }
 
         // retour Home
-        onClickHome(v);
+        onClickCancel(v);
     }
 
     public void onClickDateButton(View v) {

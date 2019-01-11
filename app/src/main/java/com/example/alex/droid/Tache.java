@@ -10,6 +10,34 @@ public class Tache implements Serializable { //FORME DE LA FREQUENCE A REVOIR
     private String lieu;
     private Date date;
     private Date deadline;
+    private String taskDate;
+
+    public String getTaskDate() {
+        return taskDate;
+    }
+
+    public void setTaskDate(String taskDate) {
+        this.taskDate = taskDate;
+    }
+
+    public String getTaskTime() {
+        return taskTime;
+    }
+
+    public void setTaskTime(String taskTime) {
+        this.taskTime = taskTime;
+    }
+
+    public String getTaskDeadline() {
+        return taskDeadline;
+    }
+
+    public void setTaskDeadline(String taskDeadline) {
+        this.taskDeadline = taskDeadline;
+    }
+
+    private String taskTime;
+    private String taskDeadline;
 
 
     enum Statut {
@@ -53,6 +81,19 @@ public class Tache implements Serializable { //FORME DE LA FREQUENCE A REVOIR
         this.statut = statut;
         this.priorite=priorite;
         this.frequence=frequence;
+    }
+
+    public Tache(String nom, String description, String lieu, String taskDate, String taskTime, String taskDeadline, Statut statut, Priorite priorite, Theme theme, Date frequence) {
+        this.nom = nom;
+        this.description = description;
+        this.lieu = lieu;
+        this.taskDate = taskDate;
+        this.taskTime = taskTime;
+        this.taskDeadline = taskDeadline;
+        this.statut = statut;
+        this.priorite = priorite;
+        this.theme = theme;
+        this.frequence = frequence;
     }
 
     public long getId() {
