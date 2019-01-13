@@ -1,10 +1,12 @@
 package com.example.alex.droid;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.view.View;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
@@ -16,7 +18,20 @@ public class DateFragmentForCalendar extends DialogFragment {
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
-        return new DatePickerDialog((CalendarTask)getActivity(),dateSetListener,year,month,day);
+        DatePickerDialog dpd = new DatePickerDialog((CalendarTask)getActivity(), AlertDialog.THEME_HOLO_LIGHT,dateSetListener,year,month,day){
+          protected void onCreate(Bundle savedInstanceState){
+              super.onCreate(savedInstanceState);
+              int day = getContext().getResources().getIdentifier("android:id/day", null, null);
+              if(day != 0){
+                  View dayPicker = findViewById(day);
+                  if(dayPicker != null){
+                      //Set Day view visibility Off/Gone
+                      dayPicker.setVisibility(View.GONE);
+                  }
+              }
+          }
+        };
+        return dpd;
 
     }
 
@@ -29,7 +44,6 @@ public class DateFragmentForCalendar extends DialogFragment {
                     String date = day+":"+month+":"+year;
 
                     mListener.onCompleteDate(date);
-                    Toast.makeText(getActivity(),"Date selectionnée : "+day+":"+month+":"+year,Toast.LENGTH_SHORT).show();
                 }
             };
 
