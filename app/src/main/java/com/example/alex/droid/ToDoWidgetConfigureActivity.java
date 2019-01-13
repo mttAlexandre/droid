@@ -14,7 +14,7 @@ import android.widget.EditText;
  */
 public class ToDoWidgetConfigureActivity extends Activity {
 
-    private static final String PREFS_NAME = "com.example.alex.droid.ToDoWidget";
+   /* private static final String PREFS_NAME = "com.example.alex.droid.ToDoWidget";
     private static final String PREF_PREFIX_KEY = "appwidget_";
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     EditText mAppWidgetText;
@@ -95,5 +95,13 @@ public class ToDoWidgetConfigureActivity extends Activity {
 
         mAppWidgetText.setText(loadTitlePref(ToDoWidgetConfigureActivity.this, mAppWidgetId));
     }
+    */
+   @Override
+    public void onCreate(Bundle icicle){
+       super.onCreate(icicle);
+
+       setResult(RESULT_CANCELED);
+       setContentView(R.layout.to_do_widget_configure);
+   }
 }
 
