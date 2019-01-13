@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 public class ToDoWidgetConfigureActivity extends Activity {
 
-   /* private static final String PREFS_NAME = "com.example.alex.droid.ToDoWidget";
+    private static final String PREFS_NAME = "com.example.alex.droid.ToDoWidget";
     private static final String PREF_PREFIX_KEY = "appwidget_";
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     EditText mAppWidgetText;
@@ -99,12 +99,14 @@ public class ToDoWidgetConfigureActivity extends Activity {
 
         mAppWidgetText.setText(loadTitlePref(ToDoWidgetConfigureActivity.this, mAppWidgetId));
     }
-    */
 
+/*
    private DBTache dbt;
    private ListView hlv;
    private ArrayList<String> values;
-   Home.MyCustomAdapter dataAdapter = null;
+
+   private static final String PREFS_NAME = "com.example.alex.droid.ToDoWidget";
+   private static final String PREF_PREFIX_KEY = "appwidget_";
 
    @Override
     public void onCreate(Bundle icicle){
@@ -124,8 +126,24 @@ public class ToDoWidgetConfigureActivity extends Activity {
          final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
               android.R.layout.simple_list_item_1, values);
          hlv.setAdapter(adapter);
-
-         final Context myContxt = this;
    }
+
+   static void deleteTitlePref(Context context, int appWidgetId) {
+      SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
+      prefs.remove(PREF_PREFIX_KEY + appWidgetId);
+      prefs.apply();
+   }
+
+   // Read the prefix from the SharedPreferences object for this widget.
+   // If there is no preference saved, get the default from a resource
+   static String loadTitlePref(Context context, int appWidgetId) {
+      SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
+      String titleValue = prefs.getString(PREF_PREFIX_KEY + appWidgetId, null);
+      if (titleValue != null) {
+         return titleValue;
+      } else {
+         return context.getString(R.string.appwidget_text);
+      }
+   }*/
 }
 

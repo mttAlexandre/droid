@@ -14,7 +14,7 @@ public class ToDoWidget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        CharSequence widgetText = ToDoWidgetConfigureActivity.loadTitlePref(context, appWidgetId);
+        CharSequence widgetText = "ee";//ToDoWidgetConfigureActivity.loadTitlePref(context, appWidgetId);
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.to_do_widget);
         views.setTextViewText(R.id.appwidget_text, widgetText);
