@@ -24,15 +24,18 @@
             android:backgroundTint="@android:color/background_light"
             android:onClick="onClickHome" />
 
-        <TextView
+
+        <Button
             android:id="@+id/calendarDateBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:paddingLeft="-40dp"
-            android:text="TextView"
             android:textColor="@android:color/background_light"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:background="@color/colorPrimaryDark"
+            android:onClick="onClickDateButtonCal"
+            android:text="Button" />
 
     </LinearLayout>
 

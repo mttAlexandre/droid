@@ -49,6 +49,22 @@ public class DBTache {
                 + " = " + id, null);
     }
 
+    public ArrayList<Tache> getTaskByPeriod(String date1, String date2){
+        ArrayList<Tache> taches = new ArrayList<Tache>();
+        //Cursor cursor = database.query(DBHelper.TABLE_TACHE, allColumns, "date <= ? and date >= ?", new String[]{date1, date2}, null, null, DBHelper.COLUMN_DATE+" DESC");
+        Cursor cursor = database.query(DBHelper.TABLE_TACHE, allColumns, null, null, null, null, DBHelper.COLUMN_DATE+" DESC");
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+            Tache t = cursorToTache(cursor);
+            taches.add(t);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return taches;
+    }
+
     public ArrayList<Tache> getAllTaches() {
         ArrayList<Tache> taches = new ArrayList<Tache>();
 
@@ -56,6 +72,7 @@ public class DBTache {
                 allColumns, null, null, null, null, DBHelper.COLUMN_DATE+" DESC");
 
         cursor.moveToFirst();
+
         while (!cursor.isAfterLast()) {
             Tache t = cursorToTache(cursor);
             taches.add(t);

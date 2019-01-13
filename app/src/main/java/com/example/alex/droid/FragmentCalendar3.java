@@ -15,14 +15,17 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.view.Gravity;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class FragmentCalendar3 extends Fragment{
 
     private static final String KEY_TIME_CALENDAR="calendarInMilli";
-
+    private DBTache dbt;
     private static FragmentCalendar3 myFragment;
     private static Calendar cal;
+    private ArrayList<Tache> values;
+
 
     private static Context cont;
 
@@ -33,6 +36,8 @@ public class FragmentCalendar3 extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        dbt = new DBTache(cont);
+        dbt.open();
 
     }
 
@@ -81,6 +86,10 @@ public class FragmentCalendar3 extends Fragment{
         Calendar mcal = (Calendar) cal.clone();
         mcal.set(Calendar.DAY_OF_MONTH, 1);
         int compteurJour = 1;
+
+        values = dbt.getTaskByPeriod("test", "test");
+        for(int i = 0; i < values.size(); i++)
+            Log.e("coucou1", String.valueOf(values.get(i).getDate()));
 
         TableLayout lay = (TableLayout) v.findViewById(R.id.layoutButton);
 

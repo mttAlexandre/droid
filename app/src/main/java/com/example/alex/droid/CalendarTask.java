@@ -1,10 +1,12 @@
 package com.example.alex.droid;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -16,6 +18,7 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Locale;
@@ -24,7 +27,7 @@ import static android.view.Gravity.AXIS_PULL_BEFORE;
 
 // GAGA TU TE DEBROUILLES POUR ÇA ;)
 
-public class CalendarTask extends AppCompatActivity {
+public class CalendarTask extends AppCompatActivity implements DateFragment.OnCompleteDateListener {
 
     protected Context cont = this;
 
@@ -52,6 +55,8 @@ public class CalendarTask extends AppCompatActivity {
             calBef.setTimeInMillis(savedInstanceState.getLong("saveDateCalendar"));
             calUnd.setTimeInMillis(savedInstanceState.getLong("saveDateCalendar"));
         }
+
+
 
         //calBef = (Calendar) cal.clone();
         //calBef.set(Calendar.MONTH, calBef.get(Calendar.MONTH)-1);
@@ -148,8 +153,7 @@ public class CalendarTask extends AppCompatActivity {
     }
 
     public void onClickHome(View v){
-        Intent intent = new Intent(this, Home.class);
-        startActivity(intent);
+        finish();
     }
 
     public String getMonth(int month){
@@ -180,6 +184,27 @@ public class CalendarTask extends AppCompatActivity {
             case 11:
                 return "Décembre";
         }
+    }
+
+    public void onClickDateButtonCal(View v) {
+        DialogFragment newFragment = new DateFragmentForCalendar();
+
+        newFragment.show(getSupportFragmentManager(), "Date Pick");
+    }
+
+    @Override
+    public void onCompleteDate(String date) {
+        String[] decompDate = date.split(":");
+        int month = Integer.parseInt(decompDate[1]);
+        int year = Integer.parseInt(decompDate[2]);
+        this.cal.set(year, month, 1);
+        this.calBef.setTimeInMillis(cal.getTimeInMillis());
+        this.calBef.add(Calendar.MONTH, -1);
+        this.calUnd.setTimeInMillis(cal.getTimeInMillis());
+        this.calUnd.add(Calendar.MONTH, 1);
+        mPageFragment.notifyDataSetChanged();
+        TextView title = (TextView) findViewById(R.id.calendarDateBar);
+        title.setText(getMonth(cal.get(Calendar.MONTH)) + " " + cal.get(Calendar.YEAR));
     }
 
     public class PageFragment extends FragmentStatePagerAdapter {
