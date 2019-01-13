@@ -27,10 +27,10 @@ public class DateFragment extends DialogFragment {
                     Calendar myDate = Calendar.getInstance();
                     myDate.set(view.getYear(),view.getMonth(),view.getDayOfMonth());
 
-                    String date = day+":"+month+":"+year;
+                    String date = day+"/"+month+"/"+year;
 
                     mListener.onCompleteDate(date);
-                    Toast.makeText(getActivity(),"Date selectionnée : "+day+":"+month+":"+year,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"Date selectionnée : "+day+"/"+month+"/"+year,Toast.LENGTH_SHORT).show();
                 }
             };
 

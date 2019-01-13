@@ -26,71 +26,24 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/modifyNom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="Nom :"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.05"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.18" />
-
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/modifyNomInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <android.support.design.widget.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Nom tache"
-                    android:inputType="text" />
-            </android.support.design.widget.TextInputLayout>
-
-            <TextView
-                android:id="@+id/modifyDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="Description : "
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.054"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.25" />
-
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/modifyDescInput"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/modifyDescInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Détail de la tache"
                     android:inputType="textMultiLine" />
             </android.support.design.widget.TextInputLayout>
 
-            <TextView
-                android:id="@+id/modifyLieu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="Lieu : "
-                tools:layout_editor_absoluteX="18dp"
-                tools:layout_editor_absoluteY="214dp" />
-
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/modifyLieuInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <android.support.design.widget.TextInputEditText
+                    android:id="@+id/modifyLieuInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Adresse "
@@ -352,6 +305,7 @@
             app:layout_constraintTop_toBottomOf="@+id/createTaskButton">
 
             <android.support.design.widget.TextInputEditText
+                android:id="@+id/inputname"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@android:color/transparent"

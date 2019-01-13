@@ -42,6 +42,32 @@ public class DBTache {
         return newTache;
     }
 
+    public void createTask(Tache task){
+        ContentValues values = new ContentValues();
+        values.put(DBHelper.COLUMN_NOM,task.getNom());
+        /*values.put(DBHelper.COLUMN_DESCRIPTION, task.getDescription());
+        values.put(DBHelper.COLUMN_DATE, task.getTaskDate());
+        values.put(DBHelper.COLUMN_LIEU, task.getLieu());
+
+        if(task.getStatut() != null)
+            values.put(DBHelper.COLUMN_STATU, task.getStatut().toString());
+        if(task.getPriorite() !=null)
+            values.put(DBHelper.COLUMN_PRIORITE, task.getPriorite().toString());
+        if(task.getTheme() != null)
+            values.put(DBHelper.COLUMN_THEME, task.getTheme().toString());
+
+        values.put(DBHelper.COLUMN_DEADLINE, task.getTaskDeadline());
+*/
+        long insertId = database.insert(DBHelper.TABLE_TACHE, null,
+                values);
+        Cursor cursor = database.query(DBHelper.TABLE_TACHE,
+                allColumns, DBHelper.COLUMN_ID + " = " + insertId, null,
+                null, null, null);
+        cursor.moveToFirst();
+
+        cursor.close();
+    }
+
     public void deleteTache(Tache t) {
         long id = t.getId();
         System.out.println("Tache deleted with id: " + id);

@@ -83,6 +83,12 @@ public class Home extends AppCompatActivity {
         super.onPause();
     }
 
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        dbt.open();
+    }
+
     public ArrayList<Tache> setValues(int i){
         ArrayList<Tache> res=new ArrayList<>();
         switch (i){
@@ -121,15 +127,29 @@ public class Home extends AppCompatActivity {
         //setContentView(R.layout.detail);
         // ÇA C'EST PAREIL MAIS ÇA CHARGE LES ÉLÉMENTS DYNAMIC EN PLUS (COMME LE CONTENU DE LA LISTVIEW POUR CLICKHOME) et il
         // faut remettre un OnCreate dans touts les classes du coup
-        Tache test = new Tache("TestDétail","tache test pour la page de détail", Tache.Theme.travail,"RAMBOUILLET",Calendar.getInstance().getTime(),Calendar.getInstance().getTime(),Tache.Statut.done,Tache.Priorite.high, null);
         Intent intent = new Intent(this, Detail.class);
+        Tache test = new Tache("TestDétail","tache test pour la page de détail","Treilles-En-Gatinais","12:09:19","22:10","12:10:19",Tache.Statut.done,Tache.Priorite.high, Tache.Theme.famille,null);
+
         intent.putExtra("Tache",test);
         startActivity(intent);
     }
 
     public void onClickCreate(View v){
         Intent intent = new Intent(this, CreateTask.class);
-        startActivity(intent);
+        startActivityForResult(intent,2);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode,resultCode,data);
+        if(requestCode == 2){
+            if(data != null) {
+                dbt.open();
+                Tache taskToAdd = (Tache) data.getSerializableExtra("CreatedTask");
+                dbt.createTask(taskToAdd);
+                dataAdapter.add(taskToAdd);
+            }
+        }
     }
 
     public void onClickCalendar(View v){
@@ -167,37 +187,16 @@ public class Home extends AppCompatActivity {
                 dataAdapter = new MyCustomAdapter(this,
                         R.layout.item, values, false);
                 hlv.setAdapter(dataAdapter);
-            /*
-            List<String> values = dbt.getAllNomTaches();
-            adapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_list_item_1, values);
-            hlv.setAdapter(adapter);
-            */
             }
         }
     }
     public void onClickAdd(View v){
-        Tache test = new Tache("TestDétail","tache test pour la page de détail", Tache.Theme.travail,"RAMBOUILLET",Calendar.getInstance().getTime(),Calendar.getInstance().getTime(),Tache.Statut.done,Tache.Priorite.high, null);
+        Tache test = new Tache("TestDétail","tache test pour la page de détail","Treilles-En-Gatinais","12:09:19","22:10","12:10:19",Tache.Statut.done,Tache.Priorite.high, Tache.Theme.famille,null);
         test = dbt.createTache(test.getNom());
         dataAdapter.add(test);
 
 
     }
-
-
-
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        //aller à la page détail et afficher l'item cliqué
-        Tache t = dataAdapter.tacheList.get(position);
-        System.out.println("JE SUIS LA ");
-
-        Intent intent = new Intent(this, Detail.class);
-        startActivity(intent);
-    }
-
-
-
-
 
     public class MyCustomAdapter extends ArrayAdapter<Tache>{
 
@@ -258,7 +257,7 @@ public class Home extends AppCompatActivity {
                 }
 
                 Tache tache = tacheList.get(position);
-                holder.code.setText("  "+tache.getDate());
+                holder.code.setText("  "+tache.getTaskDate());
                 holder.name.setText(tache.getNom());
                 holder.name.setChecked(tache.isChecked());
                 holder.name.setTag(tache);
@@ -307,9 +306,9 @@ public class Home extends AppCompatActivity {
             s+=t.getNom()+" ";
 
             if(this.showDate){
-                s+=t.getDate()+" ";
+                s+=t.getTaskDate()+" ";
             }else if(this.showDead){
-                s+=t.getDeadline()+" ";
+                s+=t.getTaskDeadline()+" ";
             }else if(this.showLieu){
                 s+=t.getLieu()+" ";
             }else if(this.showPrio){
@@ -322,32 +321,4 @@ public class Home extends AppCompatActivity {
             return s;
         }
     }
-
-    /*private void checkButtonClick() {
-
-
-        Button myButton = (Button) findViewById(R.id.button3);
-        myButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                StringBuffer responseText = new StringBuffer();
-                responseText.append("The following were selected...\n");
-
-                ArrayList<Tache> countryList = dataAdapter.tacheList;
-                for(int i=0;i<countryList.size();i++){
-                    Tache tache = countryList.get(i);
-                    if(tache.getChecked()){
-                        responseText.append("\n" + tache.getNom());
-                    }
-                }
-
-                Toast.makeText(getApplicationContext(),
-                        responseText, Toast.LENGTH_LONG).show();
-
-            }
-        });
-
-    }*/
 }

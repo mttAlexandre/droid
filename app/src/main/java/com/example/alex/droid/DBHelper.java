@@ -19,6 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_STATU = "statu";
     public static final String COLUMN_PRIORITE = "priorite";
     public static final String COLUMN_FREQUENCE = "frequence";
+    public static final String COLUMN_TIME = "time";
 
     private static final String DATABASE_NAME = "tache.db";
     private static final int DATABASE_VERSION = 1;
@@ -32,8 +33,9 @@ public class DBHelper extends SQLiteOpenHelper {
             + COLUMN_DESCRIPTION + " text, "
             + COLUMN_THEME + " text, "
             + COLUMN_LIEU + " text, "
-            + COLUMN_DATE + " date, "
-            + COLUMN_DEADLINE + " date, "
+            + COLUMN_DATE + " text not null, "
+            + COLUMN_TIME + "text not null,"
+            + COLUMN_DEADLINE + " text, "
             + COLUMN_STATU + " text, "
             + COLUMN_PRIORITE + " text, "
             + COLUMN_FREQUENCE + " text "

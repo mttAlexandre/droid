@@ -6,7 +6,8 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -20,17 +21,14 @@ public class CreateTask extends AppCompatActivity implements TimeFragment.OnComp
 
     public String time;
     public String myDate;
-
     public String deadline;
 
-    private TextView nom;
-    private TextView desc;
-    private TextView lieu;
+    private EditText nom;
+    private EditText desc;
+    private EditText lieu;
     private RadioGroup theme;
     private RadioGroup statut;
     private RadioGroup prio;
-    private TextView date;
-    private TextView dead;
     private RadioGroup frequence;
     private Button dateButton;
     private Button timeButton;
@@ -54,8 +52,9 @@ public class CreateTask extends AppCompatActivity implements TimeFragment.OnComp
         //TODO Faire un "switch" pour savoir si on veut une deadline ou non, afficher le Datepicker ou non en fonction
         this.deadLineSwitch = findViewById(R.id.deadlineSwitch);
 
-        /*this.nom=(EditText)findViewById(R.id.modifyNomInput);
-        /*desc=findViewById(R.id.modifyDescInput);
+        this.nom = findViewById(R.id.inputname);
+
+        desc=findViewById(R.id.modifyDescInput);
         desc.clearComposingText();
         lieu=findViewById(R.id.modifyLieuInput);
         lieu.clearComposingText();
@@ -65,12 +64,8 @@ public class CreateTask extends AppCompatActivity implements TimeFragment.OnComp
         statut.clearCheck();
         prio=findViewById(R.id.radioPriorite);
         prio.clearCheck();
-        date=findViewById(R.id.modifyDateInput);
-        date.clearComposingText();
-        dead=findViewById(R.id.modifyDeadInput);
-        dead.clearComposingText();
-        frequence=findViewById(R.id.modifyFrequenceInput);
-        frequence.clearCheck();*/
+        frequence=findViewById(R.id.radioFrequence);
+        frequence.clearCheck();
     }
 
     public void onClickCancel(View v) {
@@ -82,45 +77,88 @@ public class CreateTask extends AppCompatActivity implements TimeFragment.OnComp
     public void onClickSaveTask(View v){
         Tache t = new Tache();
 
-        if (nom.getText() != "") {
+        if (nom.getText().toString() != "") {
             t.setNom(nom.getText().toString());
-        } else {
-            Toast.makeText(this,"Donnez un nom a la tache",Toast.LENGTH_SHORT).show();
-        }
-        t.setDescription(desc.getText().toString());
-        t.setLieu(lieu.getText().toString());
+
+            if(this.time != null && this.myDate!=null) {
+                t.setTaskDate(myDate);
+                t.setTaskTime(time);
+                t.setDescription(this.desc.getText().toString());
+
+                if (deadLineSwitch.isEnabled()) {
+                    t.setTaskDeadline(deadline);
+                } else {
+                    deadline = null;
+                }
+
+                String statut = null;
+                RadioButton statutchecked = findViewById(this.statut.getCheckedRadioButtonId());
+                if (statutchecked != null) {
+                    statut = statutchecked.getText().toString();
+                    if (statut == "done")
+                        t.setStatut(Tache.Statut.done);
+                    else
+                        t.setStatut(Tache.Statut.todo);
+                }
 
 
-        if(this.time != null && this.myDate!=null){
-            t.setTaskDate(myDate);
-            t.setTaskTime(time);
+                String theme = null;
+                RadioButton themechecked = findViewById(this.theme.getCheckedRadioButtonId());
+                if (themechecked != null){
+                    theme = themechecked.getText().toString();
+                    switch (theme) {
+                        case "Travail":
+                            t.setTheme(Tache.Theme.travail);
+                            break;
+                        case "Maison":
+                            t.setTheme(Tache.Theme.maison);
+                            break;
+                        case "Course":
+                            t.setTheme(Tache.Theme.course);
+                            break;
+                       case "Famille":
+                            t.setTheme(Tache.Theme.famille);
+                            break;
+                        case "RDV":
+                            t.setTheme(Tache.Theme.rdv);
+                            break;
+                    }
+                }
 
-            if(deadLineSwitch.isEnabled()){
-                t.setTaskDeadline(deadline);
+                String freq = null;
+                RadioButton freqchecked = findViewById(this.frequence.getCheckedRadioButtonId());
+                if(freqchecked != null){
+                    freq = freqchecked.getText().toString();
+                    switch (freq) {
+                        case "Haute":t.setPriorite(Tache.Priorite.high);
+                            break;
+                        case "Moyenne":t.setPriorite(Tache.Priorite.medium);
+                            break;
+                        case "Basse":t.setPriorite(Tache.Priorite.low);
+                            break;
+                    }
+                }
+
+
+
+                Intent data = new Intent();
+                data.putExtra("CreatedTask",t);
+                setResult(2,data);
+                finish();
             }
             else
             {
-                deadline = null;
+                Toast.makeText(this,"Il faut choisir date & heure",Toast.LENGTH_SHORT).show();
             }
+        } else {
+            Toast.makeText(this,"Donnez un nom a la tache",Toast.LENGTH_SHORT).show();
         }
-        else
-        {
-            Toast.makeText(this,"Il faut choisir date & heure",Toast.LENGTH_SHORT).show();
-        }
+
+
+
 
 
         // et il faut transformer les radio bouttons en enun avec des switch mais fais date en prio
-
-
-        try {
-
-            //Mettre en bdd
-        } catch (Exception e) {
-
-        }
-
-        // retour Home
-        onClickCancel(v);
     }
 
     public void onClickDateButton(View v) {

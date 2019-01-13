@@ -89,7 +89,7 @@ public class FragmentCalendar3 extends Fragment{
 
         values = dbt.getTaskByPeriod("test", "test");
         for(int i = 0; i < values.size(); i++)
-            Log.e("coucou1", String.valueOf(values.get(i).getDate()));
+            Log.e("coucou1", String.valueOf(values.get(i).getTaskDate()));
 
         TableLayout lay = (TableLayout) v.findViewById(R.id.layoutButton);
 

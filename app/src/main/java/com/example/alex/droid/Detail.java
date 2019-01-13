@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 // AFFICHAGE TACHE, POSSIBILITÉ DE LA MODIFIER, PARTAGER, SUPPRIMER
 
 public class Detail extends Activity{
@@ -32,7 +35,8 @@ public class Detail extends Activity{
         this.nom.setText(t.getNom());
         this.description.setText(t.getDescription());
         this.lieu.setText(t.getLieu());
-//        this.date.setText(t.getDate().toString());
+        this.date.setText(t.getTaskDate());
+
         //this.deadline.setText(t.getDeadline().toString());
         //Après on verra bismila
     }

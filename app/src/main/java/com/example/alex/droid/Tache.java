@@ -8,9 +8,9 @@ public class Tache implements Serializable { //FORME DE LA FREQUENCE A REVOIR
     private String nom;
     private String description;
     private String lieu;
-    private Date date;
-    private Date deadline;
     private String taskDate;
+    private String taskTime;
+    private String taskDeadline;
 
     public String getTaskDate() {
         return taskDate;
@@ -36,8 +36,7 @@ public class Tache implements Serializable { //FORME DE LA FREQUENCE A REVOIR
         this.taskDeadline = taskDeadline;
     }
 
-    private String taskTime;
-    private String taskDeadline;
+
 
 
     enum Statut {
@@ -71,7 +70,7 @@ public class Tache implements Serializable { //FORME DE LA FREQUENCE A REVOIR
         this.nom=nom;
     }
 
-    public Tache(String nom, String description, Theme theme, String lieu, Date date, Date deadline, Statut statut, Priorite priorite, Date frequence){
+    /*public Tache(String nom, String description, Theme theme, String lieu, Date date, Date deadline, Statut statut, Priorite priorite, Date frequence){
         this.nom=nom;
         this.description=description;
         this.theme=theme;
@@ -81,7 +80,7 @@ public class Tache implements Serializable { //FORME DE LA FREQUENCE A REVOIR
         this.statut = statut;
         this.priorite=priorite;
         this.frequence=frequence;
-    }
+    }*/
 
     public Tache(String nom, String description, String lieu, String taskDate, String taskTime, String taskDeadline, Statut statut, Priorite priorite, Theme theme, Date frequence) {
         this.nom = nom;
@@ -126,22 +125,6 @@ public class Tache implements Serializable { //FORME DE LA FREQUENCE A REVOIR
 
     public void setLieu(String lieu) {
         this.lieu = lieu;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Date getDeadline() {
-        return deadline;
-    }
-
-    public void setDeadline(Date deadline) {
-        this.deadline = deadline;
     }
 
     public Statut getStatut() {
