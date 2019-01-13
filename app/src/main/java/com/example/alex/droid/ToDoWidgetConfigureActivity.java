@@ -7,7 +7,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 /**
  * The configuration screen for the {@link ToDoWidget ToDoWidget} AppWidget.
@@ -96,12 +100,32 @@ public class ToDoWidgetConfigureActivity extends Activity {
         mAppWidgetText.setText(loadTitlePref(ToDoWidgetConfigureActivity.this, mAppWidgetId));
     }
     */
+
+   private DBTache dbt;
+   private ListView hlv;
+   private ArrayList<String> values;
+   Home.MyCustomAdapter dataAdapter = null;
+
    @Override
     public void onCreate(Bundle icicle){
-       super.onCreate(icicle);
+         super.onCreate(icicle);
 
-       setResult(RESULT_CANCELED);
-       setContentView(R.layout.to_do_widget_configure);
+         setResult(RESULT_CANCELED);
+         setContentView(R.layout.to_do_widget_configure);
+         dbt = new DBTache(this);
+         dbt.open();
+
+         Intent intent = getIntent();
+         int radio = intent.getIntExtra("radio", -1);
+
+         hlv = findViewById(R.id.homelist);
+         values = null;
+
+         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+              android.R.layout.simple_list_item_1, values);
+         hlv.setAdapter(adapter);
+
+         final Context myContxt = this;
    }
 }
 

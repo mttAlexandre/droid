@@ -199,7 +199,7 @@ public class Home extends AppCompatActivity {
 
 
 
-    private class MyCustomAdapter extends ArrayAdapter<Tache>{
+    public class MyCustomAdapter extends ArrayAdapter<Tache>{
 
         private ArrayList<Tache> tacheList;
         private boolean checkbox;
