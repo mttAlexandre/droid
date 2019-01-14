@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class DBTache {
@@ -89,6 +90,23 @@ public class DBTache {
         }
         cursor.close();
         return taches;
+    }
+
+    public ArrayList<String> getAllNomsTacheDuJour(){
+        ArrayList<String>tasksnames = new ArrayList<String>();
+
+        Cursor cursor =database.query(DBHelper.TABLE_TACHE,allColumns,null,null,null,null,DBHelper.COLUMN_DATE);
+        Calendar c = Calendar.getInstance();
+        String today = ""+c.get(Calendar.DAY_OF_MONTH)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.YEAR);
+
+        while(!cursor.isAfterLast()){
+            Tache t = cursorToTache(cursor);
+            if(t.getTaskDate() == today)
+                tasksnames.add(t.getNom());
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return tasksnames;
     }
 
     public ArrayList<Tache> getAllTaches() {

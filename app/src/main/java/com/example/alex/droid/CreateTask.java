@@ -64,18 +64,21 @@ public class CreateTask extends AppCompatActivity implements TimeFragment.OnComp
         prio.clearCheck();
         frequence=findViewById(R.id.radioFrequence);
         frequence.clearCheck();
+
+
+
     }
 
     public void onClickCancel(View v) {
-        Intent intent = new Intent(this, Home.class);
-        startActivity(intent);
+        setResult(-1);
+        finish();
     }
 
 
     public void onClickSaveTask(View v){
         Tache t = new Tache();
 
-        if (nom.getText().toString() != "") {
+        if (nom.getText().toString() != null) {
             t.setNom(nom.getText().toString());
 
             if(this.time != null && this.myDate!=null) {
@@ -83,66 +86,122 @@ public class CreateTask extends AppCompatActivity implements TimeFragment.OnComp
                 t.setTaskTime(time);
                 t.setDescription(this.desc.getText().toString());
 
-                if (deadLineSwitch.isEnabled()) {
-                    t.setTaskDeadline(deadline);
+                if (deadLineSwitch.isChecked()) {
+                    if(deadline != null){
+                        t.setTaskDeadline(deadline);
+                        String statut = null;
+                        RadioButton statutchecked = findViewById(this.statut.getCheckedRadioButtonId());
+                        if (statutchecked != null) {
+                            statut = statutchecked.getText().toString();
+                            if (statut == "done")
+                                t.setStatut(Tache.Statut.done);
+                            else
+                                t.setStatut(Tache.Statut.todo);
+                        }
+
+
+                        String theme = null;
+                        RadioButton themechecked = findViewById(this.theme.getCheckedRadioButtonId());
+                        if (themechecked != null){
+                            theme = themechecked.getText().toString();
+                            switch (theme) {
+                                case "Travail":
+                                    t.setTheme(Tache.Theme.travail);
+                                    break;
+                                case "Maison":
+                                    t.setTheme(Tache.Theme.maison);
+                                    break;
+                                case "Course":
+                                    t.setTheme(Tache.Theme.course);
+                                    break;
+                                case "Famille":
+                                    t.setTheme(Tache.Theme.famille);
+                                    break;
+                                case "RDV":
+                                    t.setTheme(Tache.Theme.rdv);
+                                    break;
+                            }
+                        }
+
+                        String freq = null;
+                        RadioButton freqchecked = findViewById(this.frequence.getCheckedRadioButtonId());
+                        if(freqchecked != null){
+                            freq = freqchecked.getText().toString();
+                            switch (freq) {
+                                case "Haute":t.setPriorite(Tache.Priorite.high);
+                                    break;
+                                case "Moyenne":t.setPriorite(Tache.Priorite.medium);
+                                    break;
+                                case "Basse":t.setPriorite(Tache.Priorite.low);
+                                    break;
+                            }
+                        }
+
+
+
+                        Intent data = new Intent();
+                        data.putExtra("CreatedTask",t);
+                        setResult(2,data);
+                        finish();
+                    }
+                    else
+                    {
+                        Toast.makeText(this,"Il faut chosir une deadline ou la désactiver",Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     deadline = null;
-                }
-
-                String statut = null;
-                RadioButton statutchecked = findViewById(this.statut.getCheckedRadioButtonId());
-                if (statutchecked != null) {
-                    statut = statutchecked.getText().toString();
-                    if (statut == "done")
-                        t.setStatut(Tache.Statut.done);
-                    else
-                        t.setStatut(Tache.Statut.todo);
-                }
-
-
-                String theme = null;
-                RadioButton themechecked = findViewById(this.theme.getCheckedRadioButtonId());
-                if (themechecked != null){
-                    theme = themechecked.getText().toString();
-                    switch (theme) {
-                        case "Travail":
-                            t.setTheme(Tache.Theme.travail);
-                            break;
-                        case "Maison":
-                            t.setTheme(Tache.Theme.maison);
-                            break;
-                        case "Course":
-                            t.setTheme(Tache.Theme.course);
-                            break;
-                       case "Famille":
-                            t.setTheme(Tache.Theme.famille);
-                            break;
-                        case "RDV":
-                            t.setTheme(Tache.Theme.rdv);
-                            break;
+                    String statut = null;
+                    RadioButton statutchecked = findViewById(this.statut.getCheckedRadioButtonId());
+                    if (statutchecked != null) {
+                        statut = statutchecked.getText().toString();
+                        if (statut == "done")
+                            t.setStatut(Tache.Statut.done);
+                        else
+                            t.setStatut(Tache.Statut.todo);
                     }
-                }
 
-                String freq = null;
-                RadioButton freqchecked = findViewById(this.frequence.getCheckedRadioButtonId());
-                if(freqchecked != null){
-                    freq = freqchecked.getText().toString();
-                    switch (freq) {
-                        case "Haute":t.setPriorite(Tache.Priorite.high);
-                            break;
-                        case "Moyenne":t.setPriorite(Tache.Priorite.medium);
-                            break;
-                        case "Basse":t.setPriorite(Tache.Priorite.low);
-                            break;
+
+                    String theme = null;
+                    RadioButton themechecked = findViewById(this.theme.getCheckedRadioButtonId());
+                    if (themechecked != null){
+                        theme = themechecked.getText().toString();
+                        switch (theme) {
+                            case "Travail":
+                                t.setTheme(Tache.Theme.travail);
+                                break;
+                            case "Maison":
+                                t.setTheme(Tache.Theme.maison);
+                                break;
+                            case "Course":
+                                t.setTheme(Tache.Theme.course);
+                                break;
+                            case "Famille":
+                                t.setTheme(Tache.Theme.famille);
+                                break;
+                            case "RDV":
+                                t.setTheme(Tache.Theme.rdv);
+                                break;
+                        }
                     }
+
+                    String freq = null;
+                    RadioButton freqchecked = findViewById(this.frequence.getCheckedRadioButtonId());
+                    if(freqchecked != null){
+                        freq = freqchecked.getText().toString();
+                        switch (freq) {
+                            case "Haute":t.setPriorite(Tache.Priorite.high);
+                                break;
+                            case "Moyenne":t.setPriorite(Tache.Priorite.medium);
+                                break;
+                            case "Basse":t.setPriorite(Tache.Priorite.low);
+                                break;
+                        }
+                    }
+                    Intent data = new Intent();
+                    data.putExtra("CreatedTask",t);
+                    setResult(2,data);
+                    finish();
                 }
-
-
-
-                Intent data = new Intent();
-                data.putExtra("CreatedTask",t);
-                setResult(2,data);
-                finish();
             }
             else
             {

@@ -1,24 +1,24 @@
 package com.example.alex.droid;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 // AFFICHAGE TACHE, POSSIBILITÉ DE LA MODIFIER, PARTAGER, SUPPRIMER
 
 public class Detail extends Activity{
-    private long id;
+
+
+    private Boolean modified = false;
     private Tache mytask;
     private TextView nom;
     private TextView description;
     private TextView lieu;
     private TextView date;
     private TextView deadline;
+
 
 
     @Override
@@ -32,18 +32,23 @@ public class Detail extends Activity{
         this.deadline = findViewById(R.id.taskdeadline);
 
         Tache t = (Tache) getIntent().getSerializableExtra("Tache");
+        mytask = t;
         this.nom.setText(t.getNom());
         this.description.setText(t.getDescription());
         this.lieu.setText(t.getLieu());
         this.date.setText(t.getTaskDate());
+        this.deadline.setText(t.getTaskDeadline());
 
-        //this.deadline.setText(t.getDeadline().toString());
-        //Après on verra bismila
+
+
     }
 
     public void onClickHome(View v){
-        Intent intent = new Intent(this, Home.class);
-        startActivity(intent);
+        finish();
+    }
+
+    public void onClickModify(View v ){
+
     }
 
 }

@@ -122,11 +122,6 @@ public class Home extends AppCompatActivity {
     }
 
     public void onClickDetail(View v){
-        // EXEMPLE A LIRE
-        // ÇA C'EST QUAND TU VEUX METTRE QUE LE VUE XML SI ELLE EST STATIC
-        //setContentView(R.layout.detail);
-        // ÇA C'EST PAREIL MAIS ÇA CHARGE LES ÉLÉMENTS DYNAMIC EN PLUS (COMME LE CONTENU DE LA LISTVIEW POUR CLICKHOME) et il
-        // faut remettre un OnCreate dans touts les classes du coup
         Intent intent = new Intent(this, Detail.class);
         Tache test = new Tache("TestDétail","tache test pour la page de détail","Treilles-En-Gatinais","12:09:19","22:10","12:10:19",Tache.Statut.done,Tache.Priorite.high, Tache.Theme.famille,null);
 
@@ -142,12 +137,24 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
-        if(requestCode == 2){
+        if(resultCode == 2){
             if(data != null) {
                 dbt.open();
                 Tache taskToAdd = (Tache) data.getSerializableExtra("CreatedTask");
                 dbt.createTask(taskToAdd);
                 dataAdapter.add(taskToAdd);
+            }
+        }
+        else
+        {
+            if(resultCode == 3){
+                int radio = data.getIntExtra("radio", -1);
+                hlv = findViewById(R.id.homelist);
+                values = setValues(radio);
+                dataAdapter = new MyCustomAdapter(this,
+                        R.layout.item, values, false);
+
+                hlv.setAdapter(dataAdapter);
             }
         }
     }

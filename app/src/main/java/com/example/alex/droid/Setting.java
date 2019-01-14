@@ -29,8 +29,9 @@ public class Setting extends Activity {
         int s = radio.getCheckedRadioButtonId();
 
 
-        Intent intent = new Intent(this, Home.class);
+        Intent intent = new Intent();
         intent.putExtra("radio", s);
-        startActivity(intent);
+        setResult(3,intent);
+        finish();
     }
 }
