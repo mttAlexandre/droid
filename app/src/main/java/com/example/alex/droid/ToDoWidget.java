@@ -19,7 +19,7 @@ public class ToDoWidget extends AppWidgetProvider {
         DBTache dbt;
         dbt = new DBTache(context);
         dbt.open();
-        ArrayList<String> values = dbt.getAllNomTacheDuJour();
+        ArrayList<String> values = dbt.getAllNomsTacheDuJour();
         CharSequence widgetText = ToDoWidgetConfigureActivity.loadTitlePref(context, appWidgetId) + "";
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.to_do_widget);
