@@ -25,8 +25,8 @@ public class Detail extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.detail);
+
         this.nom = findViewById(R.id.taskname);
         this.description = findViewById(R.id.desctask);
         this.lieu = findViewById(R.id.taskplace);
@@ -50,7 +50,7 @@ public class Detail extends Activity{
     }
 
     public void onClickModify(View v ){
-
+        modified = true;
         Intent intent = new Intent(this,TaskModify.class);
         intent.putExtra("modifyTask",mytask);
         startActivity(intent);

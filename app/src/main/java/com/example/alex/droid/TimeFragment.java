@@ -16,7 +16,7 @@ public class TimeFragment extends DialogFragment {
         Calendar c = Calendar.getInstance();
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int minute = c.get(Calendar.MINUTE);
-        return new TimePickerDialog((CreateTask)getActivity(),timeSetListner,hour,minute,true);
+        return new TimePickerDialog(getActivity(),timeSetListner,hour,minute,true);
     }
 
     private TimePickerDialog.OnTimeSetListener timeSetListner =

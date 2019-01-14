@@ -78,6 +78,8 @@ public class CreateTask extends AppCompatActivity implements TimeFragment.OnComp
     public void onClickSaveTask(View v){
         Tache t = new Tache();
 
+        t.setLieu(this.lieu.getText().toString());
+
         if (nom.getText().toString() != null) {
             t.setNom(nom.getText().toString());
 
@@ -97,6 +99,18 @@ public class CreateTask extends AppCompatActivity implements TimeFragment.OnComp
                                 t.setStatut(Tache.Statut.done);
                             else
                                 t.setStatut(Tache.Statut.todo);
+                        }
+
+
+                        String prio;
+                        RadioButton priochecked = findViewById(this.prio.getCheckedRadioButtonId());
+                        if(priochecked != null){
+                            prio = priochecked.getText().toString();
+                            switch(prio){
+                                case "Haute":t.setPriorite(Tache.Priorite.high);break;
+                                case "Moyenne":t.setPriorite(Tache.Priorite.medium);break;
+                                case "Basse":t.setPriorite(Tache.Priorite.low);break;
+                            }
                         }
 
 
@@ -128,16 +142,16 @@ public class CreateTask extends AppCompatActivity implements TimeFragment.OnComp
                         if(freqchecked != null){
                             freq = freqchecked.getText().toString();
                             switch (freq) {
-                                case "Haute":t.setPriorite(Tache.Priorite.high);
+                                case "Tous les jours":
                                     break;
-                                case "Moyenne":t.setPriorite(Tache.Priorite.medium);
+                                case "Tous les mois":
                                     break;
-                                case "Basse":t.setPriorite(Tache.Priorite.low);
+                                case "Toutes les semaines"://TODO FAIRE LES FREQUENCES!
+                                    break;
+                                case "Tous les ans":
                                     break;
                             }
                         }
-
-
 
                         Intent data = new Intent();
                         data.putExtra("CreatedTask",t);
@@ -158,6 +172,18 @@ public class CreateTask extends AppCompatActivity implements TimeFragment.OnComp
                             t.setStatut(Tache.Statut.done);
                         else
                             t.setStatut(Tache.Statut.todo);
+                    }
+
+
+                    String prio;
+                    RadioButton priochecked = findViewById(this.prio.getCheckedRadioButtonId());
+                    if(priochecked != null){
+                        prio = priochecked.getText().toString();
+                        switch(prio){
+                            case "Haute":t.setPriorite(Tache.Priorite.high);break;
+                            case "Moyenne":t.setPriorite(Tache.Priorite.medium);break;
+                            case "Basse":t.setPriorite(Tache.Priorite.low);break;
+                        }
                     }
 
 
@@ -189,14 +215,17 @@ public class CreateTask extends AppCompatActivity implements TimeFragment.OnComp
                     if(freqchecked != null){
                         freq = freqchecked.getText().toString();
                         switch (freq) {
-                            case "Haute":t.setPriorite(Tache.Priorite.high);
+                            case "Tous les jours":
                                 break;
-                            case "Moyenne":t.setPriorite(Tache.Priorite.medium);
+                            case "Tous les mois":
                                 break;
-                            case "Basse":t.setPriorite(Tache.Priorite.low);
+                            case "Toutes les semaines"://TODO FAIRE LES FREQUENCES!
+                                break;
+                            case "Tous les ans":
                                 break;
                         }
                     }
+
                     Intent data = new Intent();
                     data.putExtra("CreatedTask",t);
                     setResult(2,data);
@@ -212,10 +241,7 @@ public class CreateTask extends AppCompatActivity implements TimeFragment.OnComp
         }
 
 
-
-
-
-        // et il faut transformer les radio bouttons en enun avec des switch mais fais date en prio
+        // et il faut transformer les radio bouttons en enun avec des checkbox
     }
 
     public void onClickDateButton(View v) {
