@@ -24,6 +24,7 @@ public class Detail extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.detail);
         this.nom = findViewById(R.id.taskname);
         this.description = findViewById(R.id.desctask);

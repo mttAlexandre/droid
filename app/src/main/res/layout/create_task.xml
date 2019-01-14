@@ -268,7 +268,7 @@
                 android:id="@+id/deadlineButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
+                android:background="@android:color/transparent"
                 android:onClick="onClickDeadlineButton"
                 android:text="Button"
                 android:textColor="@android:color/holo_red_dark"
