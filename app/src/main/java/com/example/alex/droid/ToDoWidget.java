@@ -5,6 +5,8 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.widget.RemoteViews;
 
+import java.util.ArrayList;
+
 /**
  * Implementation of App Widget functionality.
  * App Widget Configuration implemented in {@link ToDoWidgetConfigureActivity ToDoWidgetConfigureActivity}
@@ -14,7 +16,11 @@ public class ToDoWidget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        CharSequence widgetText = "TACHES DU JOUR :";//ToDoWidgetConfigureActivity.loadTitlePref(context, appWidgetId);
+        DBTache dbt;
+        dbt = new DBTache(context);
+        dbt.open();
+        ArrayList<String> values = dbt.getAllNomTacheDuJour();
+        CharSequence widgetText = ToDoWidgetConfigureActivity.loadTitlePref(context, appWidgetId) + "";
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.to_do_widget);
         views.setTextViewText(R.id.appwidget_text, widgetText);
