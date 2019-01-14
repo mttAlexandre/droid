@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TaskModify extends Activity {
 
@@ -25,7 +26,7 @@ public class TaskModify extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.tache = null; //Intent blabla
+        this.tache = (Tache) getIntent().getSerializableExtra("modifyTask");
 
         this.textNom =findViewById(R.id.modifytaskname);
         this.editTextDescription = findViewById(R.id.modifyDescInput);
@@ -37,9 +38,13 @@ public class TaskModify extends Activity {
         this.radioGroupFrequence = findViewById(R.id.modifyfrequenceGroup);
 
 
-        this.textNom.setText(tache.getNom());
-        this.editTextDescription.setText(tache.getDescription(),null);
+        if(textNom == null)
+            Toast.makeText(this,"NULL",Toast.LENGTH_SHORT).show();
 
+       /* if(tache.getNom()!=null)
+            this.textNom.setText(tache.getNom());
+        this.editTextDescription.setText(tache.getDescription(),null);
+*/
     }
 
     public void onClickSaveTask(View v){

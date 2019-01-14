@@ -1,6 +1,7 @@
 package com.example.alex.droid;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -49,6 +50,10 @@ public class Detail extends Activity{
     }
 
     public void onClickModify(View v ){
+
+        Intent intent = new Intent(this,TaskModify.class);
+        intent.putExtra("modifyTask",mytask);
+        startActivity(intent);
 
     }
 

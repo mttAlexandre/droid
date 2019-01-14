@@ -5,7 +5,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="TodoList"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -20,6 +20,7 @@
         <activity android:name=".CalendarTask" />
         <activity android:name=".Setting" />
         <activity android:name=".CreateTask" />
+        <activity android:name=".TaskModify"/>
 
         <receiver android:name=".ToDoWidget">
             <intent-filter>
