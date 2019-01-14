@@ -37,8 +37,6 @@ public class Tache implements Serializable { //FORME DE LA FREQUENCE A REVOIR
     }
 
 
-
-
     enum Statut {
         todo,
         done
@@ -69,18 +67,6 @@ public class Tache implements Serializable { //FORME DE LA FREQUENCE A REVOIR
     public Tache(String nom){
         this.nom=nom;
     }
-
-    /*public Tache(String nom, String description, Theme theme, String lieu, Date date, Date deadline, Statut statut, Priorite priorite, Date frequence){
-        this.nom=nom;
-        this.description=description;
-        this.theme=theme;
-        this.lieu=lieu;
-        this.date=date;
-        this.deadline=deadline;
-        this.statut = statut;
-        this.priorite=priorite;
-        this.frequence=frequence;
-    }*/
 
     public Tache(String nom, String description, String lieu, String taskDate, String taskTime, String taskDeadline, Statut statut, Priorite priorite, Theme theme, Date frequence) {
         this.nom = nom;

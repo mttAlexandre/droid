@@ -10,14 +10,13 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Calendar;
 
 // FORM POUR MODIFIER UNE TACHE, OU LA SUPPRIMER
 
-public class CreateTask extends AppCompatActivity implements TimeFragment.OnCompleteListener,DateFragment.OnCompleteDateListener{
+public class CreateTask extends AppCompatActivity implements TimeFragment.OnCompleteListener,DateFragment.OnCompleteDateListener,DeadlineFragment.OnCompleteDeadlineListener {
 
     public String time;
     public String myDate;
@@ -33,6 +32,7 @@ public class CreateTask extends AppCompatActivity implements TimeFragment.OnComp
     private Button dateButton;
     private Button timeButton;
     private Switch deadLineSwitch;
+    private Button deadLineButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,16 +44,14 @@ public class CreateTask extends AppCompatActivity implements TimeFragment.OnComp
 
         this.dateButton = findViewById(R.id.boutonDateTest);
         this.timeButton = findViewById(R.id.timeButton);
+        this.deadLineButton = findViewById(R.id.deadlineButton);
+        this.deadLineSwitch = findViewById(R.id.deadlineSwitch);
 
         this.dateButton.setText(c.get(Calendar.DAY_OF_MONTH)+":"+(c.get(Calendar.MONTH)+1)+":"+c.get(Calendar.YEAR));
         this.timeButton.setText(c.get(Calendar.HOUR_OF_DAY)+":"+c.get(Calendar.MINUTE));
-
-
-        //TODO Faire un "switch" pour savoir si on veut une deadline ou non, afficher le Datepicker ou non en fonction
-        this.deadLineSwitch = findViewById(R.id.deadlineSwitch);
+        this.deadLineButton.setText("Clique moi dessus =)");
 
         this.nom = findViewById(R.id.inputname);
-
         desc=findViewById(R.id.modifyDescInput);
         desc.clearComposingText();
         lieu=findViewById(R.id.modifyLieuInput);
@@ -173,6 +171,18 @@ public class CreateTask extends AppCompatActivity implements TimeFragment.OnComp
         newFrag.show(getSupportFragmentManager(),"Time picker");
     }
 
+    public void onClickDeadlineSwitch(View v){
+        if(this.deadLineSwitch.isChecked())
+            this.deadLineButton.setVisibility(View.VISIBLE);
+        else
+            this.deadLineButton.setVisibility(View.GONE);
+    }
+
+    public void onClickDeadlineButton(View v){
+        DialogFragment newFragment = new DeadlineFragment();
+        newFragment.show(getSupportFragmentManager(),"deadlinepicker");
+    }
+
     @Override
     public void onComplete(String time) {
         this.time = time;
@@ -184,5 +194,11 @@ public class CreateTask extends AppCompatActivity implements TimeFragment.OnComp
     public void onCompleteDate(String date){
         this.myDate = date;
         this.dateButton.setText(date);
+    }
+
+    @Override
+    public void onCompleteDeadline(String deadline) {
+        this.deadline = deadline;
+        this.deadLineButton.setText(deadline);
     }
 }
