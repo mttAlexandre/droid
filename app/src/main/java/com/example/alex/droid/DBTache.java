@@ -40,19 +40,6 @@ public class DBTache {
         dbHelper.close();
     }
 
-    public Tache createTache(String nom) {
-        ContentValues values = new ContentValues();
-        values.put(DBHelper.COLUMN_NOM, nom);
-        long insertId = database.insert(DBHelper.TABLE_TACHE, null,
-                values);
-        Cursor cursor = database.query(DBHelper.TABLE_TACHE,
-                allColumns, DBHelper.COLUMN_ID + " = " + insertId, null,
-                null, null, null);
-        cursor.moveToFirst();
-        Tache newTache = cursorToTache(cursor);
-        cursor.close();
-        return newTache;
-    }
 
     public void createTask(Tache task){
         ContentValues values = new ContentValues();
@@ -71,14 +58,8 @@ public class DBTache {
 
         values.put(DBHelper.COLUMN_DEADLINE, task.getTaskDeadline());
 
-        long insertId = database.insert(DBHelper.TABLE_TACHE, null,
-                values);
-        Cursor cursor = database.query(DBHelper.TABLE_TACHE,
-                allColumns, DBHelper.COLUMN_ID + " = " + insertId, null,
-                null, null, null);
-        cursor.moveToFirst();
-
-        cursor.close();
+        task.setId(database.insert(DBHelper.TABLE_TACHE, null,
+                values));
     }
 
     public void deleteTache(Tache t) {

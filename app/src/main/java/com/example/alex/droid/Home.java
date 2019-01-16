@@ -199,7 +199,7 @@ public class Home extends AppCompatActivity {
     }
     public void onClickAdd(View v){
         Tache test = new Tache("TestDétail","tache test pour la page de détail","Treilles-En-Gatinais","12:09:19","22:10","12:10:19",Tache.Statut.done,Tache.Priorite.high, Tache.Theme.famille,null);
-        test = dbt.createTache(test.getNom());
+        dbt.createTask(test);
         dataAdapter.add(test);
 
 
