@@ -20,6 +20,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -29,46 +30,41 @@ import static android.view.Gravity.AXIS_PULL_BEFORE;
 
 public class CalendarTask extends AppCompatActivity implements DateFragment.OnCompleteDateListener {
 
-    protected Context cont = this;
+    protected Fragment[] tabFrag = new Fragment[3];
+    protected DBTache dbt;
+    protected ViewPager mViewPager;
+    protected PageFragment mPageFragment;
+    protected ArrayList<Tache>[] values;
+    protected Context context = this;
 
-    Fragment[] tabFrag = new Fragment[3];
-
-    ViewPager mViewPager;
-    PageFragment mPageFragment;
-
-    Context context = this;
-
-    Calendar cal = Calendar.getInstance(Locale.FRANCE);
-    Calendar calBef = Calendar.getInstance(Locale.FRANCE);
-    Calendar calUnd = Calendar.getInstance(Locale.FRANCE);
-
-    int counter = 1;
+    protected Calendar cal = Calendar.getInstance(Locale.FRANCE);
+    protected Calendar calBef = Calendar.getInstance(Locale.FRANCE);
+    protected Calendar calUnd = Calendar.getInstance(Locale.FRANCE);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.calendar);
 
-
+        dbt = new DBTache(this);
+        dbt.open();
+        values = new ArrayList[3];
         if(savedInstanceState != null && savedInstanceState.containsKey("saveDateCalendar")){
             cal.setTimeInMillis(savedInstanceState.getLong("saveDateCalendar"));
             calBef.setTimeInMillis(savedInstanceState.getLong("saveDateCalendar"));
             calUnd.setTimeInMillis(savedInstanceState.getLong("saveDateCalendar"));
         }
 
-
-
-        //calBef = (Calendar) cal.clone();
-        //calBef.set(Calendar.MONTH, calBef.get(Calendar.MONTH)-1);
         calBef.add(Calendar.MONTH, -1);
-
-        ///calUnd = (Calendar) cal.clone();
-        //calUnd.set(Calendar.MONTH, calUnd.get(Calendar.MONTH)+1);
         calUnd.add(Calendar.MONTH, 1);
 
-        FragmentCalendar1 m1 = FragmentCalendar1.newInstance(this, calBef);
-        FragmentCalendar2 m2 = FragmentCalendar2.newInstance(this, cal);
-        FragmentCalendar3 m3 = FragmentCalendar3.newInstance(this, calUnd);
+        values[0] = dbt.getTaskByPeriod(""+(calUnd.get(Calendar.MONTH)+1)+"/"+calUnd.get(Calendar.YEAR));
+        values[1] = dbt.getTaskByPeriod(""+(cal.get(Calendar.MONTH)+1)+"/"+cal.get(Calendar.YEAR));
+        values[2] = dbt.getTaskByPeriod(""+(calBef.get(Calendar.MONTH)+1)+"/"+calBef.get(Calendar.YEAR));
+
+        FragmentCalendar1 m1 = FragmentCalendar1.newInstance(this, calBef, values[0]);
+        FragmentCalendar2 m2 = FragmentCalendar2.newInstance(this, cal, values[1]);
+        FragmentCalendar3 m3 = FragmentCalendar3.newInstance(this, calUnd, values[2]);
 
         tabFrag[0] = m1;
         tabFrag[1] = m2;
@@ -76,7 +72,7 @@ public class CalendarTask extends AppCompatActivity implements DateFragment.OnCo
 
         TextView title = (TextView) findViewById(R.id.calendarDateBar);
 
-        title.setText(getMonth(cal.get(Calendar.MONTH)) + " " + cal.get(Calendar.YEAR));
+        title.setText(""+getMonth(cal.get(Calendar.MONTH)) + " " + cal.get(Calendar.YEAR));
 
         mViewPager = (ViewPager) findViewById(R.id.viewPagerCalendar);
         mPageFragment = new PageFragment(getSupportFragmentManager());
@@ -110,11 +106,19 @@ public class CalendarTask extends AppCompatActivity implements DateFragment.OnCo
                         TextView title = (TextView) findViewById(R.id.calendarDateBar);
                         title.setText(getMonth(cal.get(Calendar.MONTH)) + " " + cal.get(Calendar.YEAR));
 
-                        mPageFragment.notifyDataSetChanged();
+                        values[0] = values[1];
+                        values[1] = values[2];
+                        ((FragmentCalendar1)tabFrag[0]).setValue(values[0]);
+                        ((FragmentCalendar2)tabFrag[1]).setValue(values[1]);
+                        //mPageFragment.notifyDataSetChanged();
                         mViewPager.setCurrentItem(1, false);
 
                         calUnd.add(Calendar.MONTH, 1);
+
+                        values[2] = dbt.getTaskByPeriod(""+(calUnd.get(Calendar.MONTH)+1)+"/"+calUnd.get(Calendar.YEAR));
                         ((FragmentCalendar3)tabFrag[2]).setCalendar(calUnd);
+
+                        ((FragmentCalendar3)tabFrag[2]).setValue(values[2]);
 
                         mPageFragment.notifyDataSetChanged();
 
@@ -123,18 +127,26 @@ public class CalendarTask extends AppCompatActivity implements DateFragment.OnCo
                     if(mViewPager.getCurrentItem() == 0){
 
                         calUnd.add(Calendar.MONTH, -1);
+                        values[2] = values[1];
                         ((FragmentCalendar3)tabFrag[2]).setCalendar(calUnd);
+                        ((FragmentCalendar3)tabFrag[2]).setValue(values[2]);
+
                         cal.add(Calendar.MONTH, -1);
+                        values[1] = values[0];
                         ((FragmentCalendar2)tabFrag[1]).setCalendar(cal);
+                        ((FragmentCalendar2)tabFrag[1]).setValue(values[1]);
 
                         TextView title = (TextView) findViewById(R.id.calendarDateBar);
                         title.setText(getMonth(cal.get(Calendar.MONTH)) + " " + cal.get(Calendar.YEAR));
 
-                        mPageFragment.notifyDataSetChanged();
+                        //mPageFragment.notifyDataSetChanged();
                         mViewPager.setCurrentItem(1, false);
 
                         calBef.add(Calendar.MONTH, -1);
+
+                        values[0] = dbt.getTaskByPeriod(""+(calBef.get(Calendar.MONTH)+1)+"/"+calBef.get(Calendar.YEAR));
                         ((FragmentCalendar1)tabFrag[0]).setCalendar(calBef);
+                        ((FragmentCalendar1)tabFrag[0]).setValue(values[0]);
 
                         mPageFragment.notifyDataSetChanged();
 

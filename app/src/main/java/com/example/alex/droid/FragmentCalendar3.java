@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,12 +22,9 @@ import java.util.Calendar;
 public class FragmentCalendar3 extends Fragment{
 
     private static final String KEY_TIME_CALENDAR="calendarInMilli";
-    private DBTache dbt;
     private static FragmentCalendar3 myFragment;
     private static Calendar cal;
-    private ArrayList<Tache> values;
-
-
+    private static ArrayList<Tache> value;
     private static Context cont;
 
     public FragmentCalendar3(){}
@@ -36,12 +34,10 @@ public class FragmentCalendar3 extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        dbt = new DBTache(cont);
-        dbt.open();
 
     }
 
-    public static FragmentCalendar3 newInstance(Context context, Calendar calendar) {
+    public static FragmentCalendar3 newInstance(Context context, Calendar calendar, ArrayList<Tache> val) {
 
         //Log.e("coucou55", "ouou");
         // 2.1 Create new fragment
@@ -59,7 +55,9 @@ public class FragmentCalendar3 extends Fragment{
         myFragment.setArguments(args);
 
         cont = context;
+
         myFragment.setCalendar(calendar);
+        myFragment.setValue(val);
 
         //Log.e("coucou28", "cal : " + cal.get(Calendar.MONTH));
 
@@ -67,7 +65,9 @@ public class FragmentCalendar3 extends Fragment{
 
     }
 
-
+    public void setValue(ArrayList<Tache> val) {
+        this.value = val;
+    }
 
     public Calendar getCalendar(){
         return cal;
@@ -87,10 +87,7 @@ public class FragmentCalendar3 extends Fragment{
         mcal.set(Calendar.DAY_OF_MONTH, 1);
         int compteurJour = 1;
 
-        values = dbt.getTaskByPeriod("test", "test");
-        for(int i = 0; i < values.size(); i++)
-            Log.e("coucou1", String.valueOf(values.get(i).getTaskDate()));
-
+        ArrayList<Tache> value2 = value;
         TableLayout lay = (TableLayout) v.findViewById(R.id.layoutButton);
 
         /*TextView tv = new TextView(cont);
@@ -166,9 +163,22 @@ public class FragmentCalendar3 extends Fragment{
 
                         b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT, (float) 0.14));
                         b.setId(i);
-                        b.setText("" + mcal.get(Calendar.DAY_OF_MONTH));
+                        String resText = "";
+                        Boolean test = true;
+                        while(test && !value2.isEmpty()){
+                            String [] breakDate = value2.get(0).getTaskDate().split("/");
+                            if(Integer.parseInt(breakDate[0]) == mcal.get(Calendar.DAY_OF_MONTH)) {
+                                resText += "<p>" + value2.get(0).getNom() + "</p>";
+                                value2.remove(0);
+                            }
+                            else{
+                                test = false;
+                            }
+                        }
+
+                        b.setText( Html.fromHtml("<p>"+mcal.get(Calendar.DAY_OF_MONTH)+"</p>"+resText));
                         //b.setGravity(AXIS_PULL_BEFORE);
-                        b.setSingleLine(true);
+
                         b.setPadding(5, 0, 0, 0);
                         b.setTextSize(10);
 
@@ -191,9 +201,22 @@ public class FragmentCalendar3 extends Fragment{
 
                         b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT, (float) 0.14));
                         b.setId(i);
-                        b.setText("" + mcal.get(Calendar.DAY_OF_MONTH));
+                        String resText = "";
+                        Boolean test = true;
+                        while(test && !value2.isEmpty()){
+                            String [] breakDate = value2.get(0).getTaskDate().split("/");
+                            if(Integer.parseInt(breakDate[0]) == mcal.get(Calendar.DAY_OF_MONTH)) {
+                                resText += "<p>" + value2.get(0).getNom() + "</p>";
+                                value2.remove(0);
+                            }
+                            else{
+                                test = false;
+                            }
+                        }
+
+                        b.setText( Html.fromHtml("<p>"+mcal.get(Calendar.DAY_OF_MONTH)+"</p>"+resText));
                         //b.setGravity(AXIS_PULL_BEFORE);
-                        b.setSingleLine(true);
+
                         b.setPadding(5, 0, 0, 0);
                         b.setTextSize(10);
 
@@ -231,9 +254,22 @@ public class FragmentCalendar3 extends Fragment{
                         b.setId(i);
                         mcal.set(java.util.Calendar.DAY_OF_MONTH, compteurJour);
                         compteurJour++;
-                        b.setText("" + mcal.get(Calendar.DAY_OF_MONTH));
+                        String resText = "";
+                        Boolean test = true;
+                        while(test && !value2.isEmpty()){
+                            String [] breakDate = value2.get(0).getTaskDate().split("/");
+                            if(Integer.parseInt(breakDate[0]) == mcal.get(Calendar.DAY_OF_MONTH)) {
+                                resText += "<p>" + value2.get(0).getNom() + "</p>";
+                                value2.remove(0);
+                            }
+                            else{
+                                test = false;
+                            }
+                        }
+
+                        b.setText( Html.fromHtml("<p>"+mcal.get(Calendar.DAY_OF_MONTH)+"</p>"+resText));
                         //b.setGravity(AXIS_PULL_BEFORE);
-                        b.setSingleLine(true);
+
                         b.setPadding(5, 0, 0, 0);
                         b.setTextSize(10);
                         //b.setEllipsize(TextUtils.TruncateAt.END);

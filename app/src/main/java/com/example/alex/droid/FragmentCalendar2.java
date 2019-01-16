@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.view.Gravity;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class FragmentCalendar2 extends Fragment{
@@ -23,7 +26,7 @@ public class FragmentCalendar2 extends Fragment{
 
     private static FragmentCalendar2 myFragment;
     private static Calendar cal;
-
+    private static ArrayList<Tache> value;
     private static Context cont;
 
     public FragmentCalendar2(){}
@@ -36,7 +39,7 @@ public class FragmentCalendar2 extends Fragment{
 
     }
 
-    public static FragmentCalendar2 newInstance(Context context, Calendar calendar) {
+    public static FragmentCalendar2 newInstance(Context context, Calendar calendar, ArrayList<Tache> val) {
 
         // 2.1 Create new fragment
 
@@ -53,14 +56,16 @@ public class FragmentCalendar2 extends Fragment{
 
         cont = context;
         myFragment.setCalendar(calendar);
-
-        Log.e("coucou28", "cal : " + cal.get(Calendar.MONTH));
+        myFragment.setValue(val);
+        //Log.e("coucou28", "cal : " + cal.get(Calendar.MONTH));
 
         return(myFragment);
 
     }
 
-
+    public void setValue(ArrayList<Tache> val) {
+        this.value = val;
+    }
 
     public Calendar getCalendar(){
         return cal;
@@ -69,6 +74,7 @@ public class FragmentCalendar2 extends Fragment{
     public void setCalendar(Calendar calendar){
         cal = calendar;
     }
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -79,6 +85,8 @@ public class FragmentCalendar2 extends Fragment{
         Calendar mcal = (Calendar) cal.clone();
         mcal.set(Calendar.DAY_OF_MONTH, 1);
         int compteurJour = 1;
+
+        ArrayList<Tache> value2 = value;
 
         TableLayout lay = (TableLayout) v.findViewById(R.id.layoutButton);
 
@@ -157,9 +165,21 @@ public class FragmentCalendar2 extends Fragment{
 
                         b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT, (float) 0.14));
                         b.setId(i);
-                        b.setText("" + mcal.get(Calendar.DAY_OF_MONTH));
+                        String resText = "";
+                        Boolean test = true;
+                        while(test && !value.isEmpty()){
+                            String [] breakDate = value.get(0).getTaskDate().split("/");
+                            if(Integer.parseInt(breakDate[0]) == mcal.get(Calendar.DAY_OF_MONTH)) {
+                                resText += "<p>" + value.get(0).getNom() + "</p>";
+                                value.remove(0);
+                            }
+                            else{
+                                test = false;
+                            }
+                        }
+
+                        b.setText( Html.fromHtml("<p>"+mcal.get(Calendar.DAY_OF_MONTH)+"</p>"+resText));
                         //b.setGravity(AXIS_PULL_BEFORE);
-                        b.setSingleLine(true);
                         b.setPadding(5, 0, 0, 0);
                         b.setTextSize(10);
 
@@ -173,9 +193,6 @@ public class FragmentCalendar2 extends Fragment{
 
                 }
                 else if(j == 4 || j == 5){
-
-
-
                     for(int i = 0; i < parcours; i++){
                         Button b = new CalendarButton(cont);
 
@@ -184,7 +201,21 @@ public class FragmentCalendar2 extends Fragment{
 
                         b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT, (float) 0.14));
                         b.setId(i);
-                        b.setText("" + mcal.get(Calendar.DAY_OF_MONTH));
+                        String resText = "";
+                        Boolean test = true;
+                        while(test && !value.isEmpty()){
+                            String [] breakDate = value.get(0).getTaskDate().split("/");
+                            if(Integer.parseInt(breakDate[0]) == mcal.get(Calendar.DAY_OF_MONTH)) {
+                                resText += "<p>" + value.get(0).getNom() + "</p>";
+                                value.remove(0);
+                            }
+                            else{
+                                test = false;
+                            }
+                        }
+
+                        b.setText( Html.fromHtml("<p>"+mcal.get(Calendar.DAY_OF_MONTH)+"</p>"+resText));
+
                         //b.setGravity(AXIS_PULL_BEFORE);
                         b.setSingleLine(true);
                         b.setPadding(5, 0, 0, 0);
@@ -205,15 +236,13 @@ public class FragmentCalendar2 extends Fragment{
 
                         b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT, (float) 0.14));
                         b.setId(i);
-                        b.setText("");
                         //b.setGravity(AXIS_PULL_BEFORE);
                         //b.setSingleLine(true);
                         b.setPadding(5, 0, 0, 0);
                         //b.setTextSize(10);
                         //b.setEllipsize(TextUtils.TruncateAt.END);
-
                         b.setBackgroundResource(R.drawable.no_button);
-
+                        b.setText("");
                         //b.setClickable(false);
                         tr.addView(b);
                     }
@@ -226,9 +255,22 @@ public class FragmentCalendar2 extends Fragment{
                         b.setId(i);
                         mcal.set(java.util.Calendar.DAY_OF_MONTH, compteurJour);
                         compteurJour++;
-                        b.setText("" + mcal.get(Calendar.DAY_OF_MONTH));
+                        String resText = "";
+                        Boolean test = true;
+                        while(test && !value.isEmpty()){
+                            String [] breakDate = value.get(0).getTaskDate().split("/");
+                            if(Integer.parseInt(breakDate[0]) == mcal.get(Calendar.DAY_OF_MONTH)) {
+                                resText += "<p>" + value.get(0).getNom() + "</p>";
+                                value.remove(0);
+                            }
+                            else{
+                                test = false;
+                            }
+                        }
+
+                        b.setText( Html.fromHtml("<p>"+mcal.get(Calendar.DAY_OF_MONTH)+"</p>"+resText));
+
                         //b.setGravity(AXIS_PULL_BEFORE);
-                        b.setSingleLine(true);
                         b.setPadding(5, 0, 0, 0);
                         b.setTextSize(10);
                         //b.setEllipsize(TextUtils.TruncateAt.END);

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -69,16 +70,24 @@ public class DBTache {
                 + " = " + id, null);
     }
 
-    public ArrayList<Tache> getTaskByPeriod(String date1, String date2){
+    public ArrayList<Tache> getTaskByPeriod(String date1){
         ArrayList<Tache> taches = new ArrayList<Tache>();
         //Cursor cursor = database.query(DBHelper.TABLE_TACHE, allColumns, "date <= ? and date >= ?", new String[]{date1, date2}, null, null, DBHelper.COLUMN_DATE+" DESC");
         Cursor cursor = database.query(DBHelper.TABLE_TACHE, allColumns, null, null, null, null, DBHelper.COLUMN_DATE+" DESC");
 
         cursor.moveToFirst();
+        String [] date = date1.split("/");
 
         while (!cursor.isAfterLast()) {
             Tache t = cursorToTache(cursor);
-            taches.add(t);
+            if(t.getTaskDate() != null){
+                String[] dateTask = t.getTaskDate().split("/");
+
+                if(date[0].equals(dateTask[1]) && date[1].equals(dateTask[2])){
+                    //Log.e("coucoujfnkj888", t.getTaskDate());
+                    taches.add(t);
+                }
+            }
             cursor.moveToNext();
         }
         cursor.close();
@@ -271,4 +280,5 @@ public class DBTache {
 
         return t;
     }
+
 }
