@@ -21,7 +21,7 @@ public class DBTache {
             DBHelper.COLUMN_THEME,
             DBHelper.COLUMN_LIEU,
             DBHelper.COLUMN_DATE,
-            //DBHelper.COLUMN_TIME,
+            DBHelper.COLUMN_TIME,
             DBHelper.COLUMN_DEADLINE,
             DBHelper.COLUMN_STATU,
             DBHelper.COLUMN_PRIORITE,
@@ -237,7 +237,7 @@ public class DBTache {
 
             t.setLieu(cursor.getString(4));
             t.setTaskDate(cursor.getString(5));
-           /* t.setTaskTime(cursor.getString(6));
+            t.setTaskTime(cursor.getString(6));
             t.setTaskDeadline(cursor.getString(7));
 
             String statut = cursor.getString(8);

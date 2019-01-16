@@ -21,7 +21,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PRIORITE = "priorite";
     public static final String COLUMN_FREQUENCE = "frequence";
 
-    private static final String DATABASE_NAME = "tache.db";
+    private static final String DATABASE_NAME = "tacheBdd.db";
     private static final int DATABASE_VERSION = 1;
 
     // Commande sql pour la création de la base de données, IL FAUT ENCORE AJOUTER TOUTES LES AUTRES COLONNES
@@ -34,7 +34,7 @@ public class DBHelper extends SQLiteOpenHelper {
             + COLUMN_THEME + " text, "
             + COLUMN_LIEU + " text, "
             + COLUMN_DATE + " text, "
-            + COLUMN_TIME + "text, "
+            + COLUMN_TIME + " text, "
             + COLUMN_DEADLINE + " text, "
             + COLUMN_STATU + " text, "
             + COLUMN_PRIORITE + " text, "
