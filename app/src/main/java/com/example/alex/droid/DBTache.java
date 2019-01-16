@@ -14,8 +14,19 @@ public class DBTache {
 
     private SQLiteDatabase database;
     private DBHelper dbHelper;
-    private String[] allColumns = { DBHelper.COLUMN_ID,
-            DBHelper.COLUMN_NOM};
+    private String[] allColumns = {
+            DBHelper.COLUMN_ID,
+            DBHelper.COLUMN_NOM,
+            DBHelper.COLUMN_DESCRIPTION,
+            DBHelper.COLUMN_THEME,
+            DBHelper.COLUMN_LIEU,
+            DBHelper.COLUMN_DATE,
+            //DBHelper.COLUMN_TIME,
+            DBHelper.COLUMN_DEADLINE,
+            DBHelper.COLUMN_STATU,
+            DBHelper.COLUMN_PRIORITE,
+            DBHelper.COLUMN_FREQUENCE
+    };
 
     public DBTache(Context context) {
         dbHelper = new DBHelper(context);
@@ -48,6 +59,7 @@ public class DBTache {
         values.put(DBHelper.COLUMN_NOM,task.getNom());
         values.put(DBHelper.COLUMN_DESCRIPTION, task.getDescription());
         values.put(DBHelper.COLUMN_DATE, task.getTaskDate());
+        values.put(DBHelper.COLUMN_TIME,task.getTaskTime());
         values.put(DBHelper.COLUMN_LIEU, task.getLieu());
 
         if(task.getStatut() != null)
@@ -226,7 +238,7 @@ public class DBTache {
         Tache t = new Tache();
         t.setId(cursor.getLong(0));
         t.setNom(cursor.getString(1));
-         //   t.setDescription(cursor.getString(2));
+            t.setDescription(cursor.getString(2));
             String theme = cursor.getString(3);
             if (theme != null) {
                 if (theme == "Travail")
@@ -244,7 +256,7 @@ public class DBTache {
 
             t.setLieu(cursor.getString(4));
             t.setTaskDate(cursor.getString(5));
-            t.setTaskTime(cursor.getString(6));
+           /* t.setTaskTime(cursor.getString(6));
             t.setTaskDeadline(cursor.getString(7));
 
             String statut = cursor.getString(8);
