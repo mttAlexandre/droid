@@ -23,7 +23,7 @@ public class ToDoWidget extends AppWidgetProvider {
         String widgetText = ToDoWidgetConfigureActivity.loadTitlePref(context, appWidgetId) ;
         try {
             ArrayList<String> values = dbt.getAllNomsTacheDuJour();
-            if(values.isEmpty())
+            if(!values.isEmpty())
                 widgetText +=values.toString();
             else
                 widgetText+=" pas de taches pour aujourd'hui ";
