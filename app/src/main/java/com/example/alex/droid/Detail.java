@@ -19,6 +19,11 @@ public class Detail extends Activity{
     private TextView lieu;
     private TextView date;
     private TextView deadline;
+    private TextView deadlineLabel;
+    private TextView priorite;
+    private TextView frequence;
+    private TextView statut;
+    private TextView theme;
 
 
 
@@ -32,6 +37,11 @@ public class Detail extends Activity{
         this.lieu = findViewById(R.id.taskplace);
         this.date = findViewById(R.id.taskdate);
         this.deadline = findViewById(R.id.taskdeadline);
+        this.statut = findViewById(R.id.detailstatut);
+        this.theme = findViewById(R.id.detailTheme);
+        this.priorite = findViewById(R.id.detailPrio);
+        this.frequence = findViewById(R.id.detailFrequence);
+        this.deadlineLabel = findViewById(R.id.deadlineLabel);
 
         Tache t = (Tache) getIntent().getSerializableExtra("Tache");
         mytask = t;
@@ -39,7 +49,39 @@ public class Detail extends Activity{
         this.description.setText(t.getDescription());
         this.lieu.setText(t.getLieu());
         this.date.setText(t.getTaskDate());
-        this.deadline.setText(t.getTaskDeadline());
+
+        if(t.getTaskDeadline() == null)
+            this.deadlineLabel.setVisibility(View.GONE);
+
+
+        if(t.getPriorite() != null)
+            if(t.getPriorite() == Tache.Priorite.high)
+                priorite.setText("Haute");
+            else if(t.getPriorite() == Tache.Priorite.medium)
+                priorite.setText("Moyenne");
+            else
+                priorite.setText("Basse");
+
+        if(t.getStatut() != null)
+            if(t.getStatut() == Tache.Statut.done)
+                statut.setText("Done");
+            else
+                statut.setText("To do");
+
+        if(t.getTheme() != null)
+            if(t.getTheme() == Tache.Theme.course)
+                theme.setText("Course");
+            else if(t.getTheme() == Tache.Theme.famille)
+                theme.setText("Famille");
+            else if(t.getTheme() == Tache.Theme.maison)
+                theme.setText("Maison");
+            else if (t.getTheme() == Tache.Theme.travail)
+                theme.setText("Travail");
+            else
+                theme.setText("Rdv");
+
+
+
 
 
 

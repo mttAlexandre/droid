@@ -28,8 +28,7 @@ public class ToDoWidget extends AppWidgetProvider {
 
         }catch (Exception e){
             //widgetText +=e.toString();
-            widgetText+=" pas de taches pour aujourd'hui ";
-            Toast.makeText(context,"CATCH",Toast.LENGTH_SHORT).show();
+            widgetText+=" Pas de taches pour aujourd'hui ";
         }
         //+ "\n + "+values.toString();
         // Construct the RemoteViews object
