@@ -1,5 +1,6 @@
 package com.example.alex.droid;
 
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -74,6 +75,7 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onResume() {
         dbt.open();
+        ToDoWidget.updateAppWidget(this, AppWidgetManager.getInstance(this), AppWidgetManager.INVALID_APPWIDGET_ID);
         super.onResume();
     }
 
@@ -137,6 +139,7 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
+        ToDoWidget.updateAppWidget(this, AppWidgetManager.getInstance(this), AppWidgetManager.INVALID_APPWIDGET_ID);
         if(resultCode == 2){
             if(data != null) {
                 dbt.open();

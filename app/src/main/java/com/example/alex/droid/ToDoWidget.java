@@ -24,7 +24,7 @@ public class ToDoWidget extends AppWidgetProvider {
             ArrayList<String> values = dbt.getAllNomsTacheDuJour();
             widgetText +=values.toString();
         }catch (Exception e){
-
+            //widgetText +=e.toString();
         }
         //+ "\n + "+values.toString();
         // Construct the RemoteViews object

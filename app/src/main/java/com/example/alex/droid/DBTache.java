@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -100,13 +101,14 @@ public class DBTache {
         Cursor cursor =database.query(DBHelper.TABLE_TACHE,allColumns,null,null,null,null,DBHelper.COLUMN_DATE);
         Calendar c = Calendar.getInstance();
         String today = ""+c.get(Calendar.DAY_OF_MONTH)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.YEAR);
+        cursor.moveToFirst();
 
-        while(!cursor.isAfterLast()){
+        do {
             Tache t = cursorToTache(cursor);
-            if(t.getTaskDate() == today)
+            if(t.getTaskDate().equals(today))
                 tasksnames.add(t.getNom());
             cursor.moveToNext();
-        }
+        }  while(!cursor.isAfterLast());
         cursor.close();
         return tasksnames;
     }
