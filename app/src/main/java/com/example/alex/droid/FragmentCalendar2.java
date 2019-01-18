@@ -142,6 +142,7 @@ public class FragmentCalendar2 extends Fragment{
                             break;
                     }
 
+
                     for(int i = 0; i < firstDay; i++){
                         TextView b = new TextView(cont);
                         b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT, (float) 0.14));
