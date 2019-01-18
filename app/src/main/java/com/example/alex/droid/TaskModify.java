@@ -26,9 +26,7 @@ public class TaskModify extends AppCompatActivity implements DateFragment.OnComp
     private Button buttonDeadline;
     private RadioGroup radioGroupFrequence;
 
-    private DBTache dbt;
-    private Home.MyCustomAdapter adapter;
-
+    private String date,time,deadline;
 
 
     @Override

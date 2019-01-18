@@ -40,6 +40,12 @@ public class Home extends AppCompatActivity {
         dbt = new DBTache(this);
         dbt.open();
 
+        Tache modifiedTask = (Tache) getIntent().getSerializableExtra("modifiedTask");
+        if(modifiedTask != null) {
+            dbt.deleteTache(modifiedTask);
+            dbt.createTask(modifiedTask);
+        }
+
         daySelected = "";
         Intent intentCal = getIntent();
         if(intentCal.hasExtra("daySelected")) {
