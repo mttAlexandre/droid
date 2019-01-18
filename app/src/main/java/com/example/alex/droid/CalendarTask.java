@@ -58,9 +58,9 @@ public class CalendarTask extends AppCompatActivity implements DateFragment.OnCo
         calBef.add(Calendar.MONTH, -1);
         calUnd.add(Calendar.MONTH, 1);
 
-        values[0] = dbt.getTaskByPeriod(""+(calUnd.get(Calendar.MONTH)+1)+"/"+calUnd.get(Calendar.YEAR));
+        values[2] = dbt.getTaskByPeriod(""+(calUnd.get(Calendar.MONTH)+1)+"/"+calUnd.get(Calendar.YEAR));
         values[1] = dbt.getTaskByPeriod(""+(cal.get(Calendar.MONTH)+1)+"/"+cal.get(Calendar.YEAR));
-        values[2] = dbt.getTaskByPeriod(""+(calBef.get(Calendar.MONTH)+1)+"/"+calBef.get(Calendar.YEAR));
+        values[0] = dbt.getTaskByPeriod(""+(calBef.get(Calendar.MONTH)+1)+"/"+calBef.get(Calendar.YEAR));
 
         FragmentCalendar1 m1 = FragmentCalendar1.newInstance(this, calBef, values[0]);
         FragmentCalendar2 m2 = FragmentCalendar2.newInstance(this, cal, values[1]);
@@ -214,6 +214,14 @@ public class CalendarTask extends AppCompatActivity implements DateFragment.OnCo
         this.calBef.add(Calendar.MONTH, -1);
         this.calUnd.setTimeInMillis(cal.getTimeInMillis());
         this.calUnd.add(Calendar.MONTH, 1);
+
+        values[2] = dbt.getTaskByPeriod(""+(calUnd.get(Calendar.MONTH)+1)+"/"+calUnd.get(Calendar.YEAR));
+        values[1] = dbt.getTaskByPeriod(""+(cal.get(Calendar.MONTH)+1)+"/"+cal.get(Calendar.YEAR));
+        values[0] = dbt.getTaskByPeriod(""+(calBef.get(Calendar.MONTH)+1)+"/"+calBef.get(Calendar.YEAR));
+
+        ((FragmentCalendar1)tabFrag[0]).setValue(values[0]);
+        ((FragmentCalendar2)tabFrag[1]).setValue(values[1]);
+        ((FragmentCalendar3)tabFrag[2]).setValue(values[2]);
         mPageFragment.notifyDataSetChanged();
         TextView title = (TextView) findViewById(R.id.calendarDateBar);
         title.setText(getMonth(cal.get(Calendar.MONTH)) + " " + cal.get(Calendar.YEAR));
