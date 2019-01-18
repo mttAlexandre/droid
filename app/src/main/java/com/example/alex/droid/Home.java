@@ -28,6 +28,7 @@ public class Home extends AppCompatActivity {
     private ArrayList<Tache> values;
     private boolean checkbox=false;
     private String daySelected;
+    private int radio = -1;
 
     MyCustomAdapter dataAdapter = null;
 
@@ -47,7 +48,7 @@ public class Home extends AppCompatActivity {
         }
 
         Intent intent = getIntent();
-        int radio = intent.getIntExtra("radio", -1);
+        radio = intent.getIntExtra("radio", -1);
 
         hlv = findViewById(R.id.homelist);
         if(daySelected == "")
