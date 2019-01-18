@@ -1,12 +1,14 @@
 package com.example.alex.droid;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +26,9 @@ public class TaskModify extends AppCompatActivity implements DateFragment.OnComp
     private Button buttonDeadline;
     private RadioGroup radioGroupFrequence;
 
+    private DBTache dbt;
+    private Home.MyCustomAdapter adapter;
+
 
 
     @Override
@@ -32,6 +37,7 @@ public class TaskModify extends AppCompatActivity implements DateFragment.OnComp
         setContentView(R.layout.task_modify);
 
         this.tache = (Tache) getIntent().getSerializableExtra("modifyTask");
+
 
         this.textNom =findViewById(R.id.modifytaskname);
         this.editTextDescription = findViewById(R.id.modifyinputtextDesc);
@@ -82,13 +88,51 @@ public class TaskModify extends AppCompatActivity implements DateFragment.OnComp
     }
 
     public void onClickSaveTask(View v){
-        //TODO Sauvegarde des modifs
+
         tache.setDescription(editTextDescription.getText().toString());
         tache.setLieu(editTextAdresse.getText().toString());
 
 
+        String statut;
+        RadioButton statutchecked = findViewById(this.radioGroupStatut.getCheckedRadioButtonId());
+        if (statutchecked != null) {
+            statut = statutchecked.getText().toString();
+            if (statut == "done")
+                tache.setStatut(Tache.Statut.done);
+            else
+                tache.setStatut(Tache.Statut.todo);
+        }
 
+        String prio;
+        RadioButton priochecked = findViewById(this.radioGroupPriorite.getCheckedRadioButtonId());
+        if(priochecked != null){
+            prio = priochecked.getText().toString();
+            switch(prio){
+                case "Haute":tache.setPriorite(Tache.Priorite.high);break;
+                case "Moyenne":tache.setPriorite(Tache.Priorite.medium);break;
+                case "Basse":tache.setPriorite(Tache.Priorite.low);break;
+            }
+        }
 
+        String freq;
+        RadioButton freqchecked = findViewById(this.radioGroupFrequence.getCheckedRadioButtonId());
+        if(freqchecked != null) {
+            freq = freqchecked.getText().toString();
+            switch (freq) {
+                case "Tous les jours":
+                    break;
+                case "Tous les mois":
+                    break;
+                case "Toutes les semaines":
+                    break;
+                case "Tous les ans":
+                    break;
+            }
+        }
+
+        Intent data = new Intent(this,Home.class);
+        data.putExtra("modifiedTask",tache);
+        startActivity(data);
 
     }
 

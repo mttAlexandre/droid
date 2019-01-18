@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 // AFFICHAGE TACHE, POSSIBILITÉ DE LA MODIFIER, PARTAGER, SUPPRIMER
@@ -24,6 +25,7 @@ public class Detail extends Activity{
     private TextView frequence;
     private TextView statut;
     private TextView theme;
+    private TextView timeTextView;
 
 
 
@@ -42,47 +44,56 @@ public class Detail extends Activity{
         this.priorite = findViewById(R.id.detailPrio);
         this.frequence = findViewById(R.id.detailFrequence);
         this.deadlineLabel = findViewById(R.id.deadlineLabel);
+        this.timeTextView = findViewById(R.id.timeTextView);
 
-        Tache t = (Tache) getIntent().getSerializableExtra("Tache");
-        mytask = t;
-        this.nom.setText(t.getNom());
-        this.description.setText(t.getDescription());
-        this.lieu.setText(t.getLieu());
-        this.date.setText(t.getTaskDate());
 
-        if(t.getTaskDeadline() == null)
+        mytask = (Tache) getIntent().getSerializableExtra("Tache");
+
+
+
+        this.nom.setText(mytask.getNom());
+        this.description.setText(mytask.getDescription());
+        this.lieu.setText(mytask.getLieu());
+        this.date.setText(mytask.getTaskDate());
+        if(mytask.getTaskDeadline() == null) {
+            this.deadline.setText(null);
+            this.deadlineLabel.setText("Pas de deadline");
+        }
+        else
+        {
+            this.deadline.setText(mytask.getTaskDeadline());
+        }
+        this.timeTextView.setText(mytask.getTaskTime());
+
+        if(mytask.getTaskDeadline() == null)
             this.deadlineLabel.setVisibility(View.GONE);
 
 
-        if(t.getPriorite() != null)
-            if(t.getPriorite() == Tache.Priorite.high)
+        if(mytask.getPriorite() != null)
+            if(mytask.getPriorite() == Tache.Priorite.high)
                 priorite.setText("Haute");
-            else if(t.getPriorite() == Tache.Priorite.medium)
+            else if(mytask.getPriorite() == Tache.Priorite.medium)
                 priorite.setText("Moyenne");
             else
                 priorite.setText("Basse");
 
-        if(t.getStatut() != null)
-            if(t.getStatut() == Tache.Statut.done)
+        if(mytask.getStatut() != null)
+            if(mytask.getStatut() == Tache.Statut.done)
                 statut.setText("Done");
             else
                 statut.setText("To do");
 
-        if(t.getTheme() != null)
-            if(t.getTheme() == Tache.Theme.course)
+        if(mytask.getTheme() != null)
+            if(mytask.getTheme() == Tache.Theme.course)
                 theme.setText("Course");
-            else if(t.getTheme() == Tache.Theme.famille)
+            else if(mytask.getTheme() == Tache.Theme.famille)
                 theme.setText("Famille");
-            else if(t.getTheme() == Tache.Theme.maison)
+            else if(mytask.getTheme() == Tache.Theme.maison)
                 theme.setText("Maison");
-            else if (t.getTheme() == Tache.Theme.travail)
+            else if (mytask.getTheme() == Tache.Theme.travail)
                 theme.setText("Travail");
             else
                 theme.setText("Rdv");
-
-
-
-
 
 
     }
@@ -92,7 +103,6 @@ public class Detail extends Activity{
     }
 
     public void onClickModify(View v ){
-        modified = true;
         Intent intent = new Intent(this,TaskModify.class);
         intent.putExtra("modifyTask",mytask);
         startActivity(intent);

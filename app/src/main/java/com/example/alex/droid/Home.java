@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -26,6 +27,7 @@ public class Home extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private ArrayList<Tache> values;
     private boolean checkbox=false;
+    private int radio;
 
     MyCustomAdapter dataAdapter = null;
 
@@ -39,8 +41,13 @@ public class Home extends AppCompatActivity {
         dbt = new DBTache(this);
         dbt.open();
 
-        Intent intent = getIntent();
-        int radio = intent.getIntExtra("radio", -1);
+        Tache modifiedTask = (Tache) getIntent().getSerializableExtra("modifiedTask");
+        if(modifiedTask != null) {
+            dbt.deleteTache(modifiedTask);
+            dbt.createTask(modifiedTask);
+        }
+
+
 
         hlv = findViewById(R.id.homelist);
         values = setValues(radio);
@@ -61,17 +68,13 @@ public class Home extends AppCompatActivity {
                 else{
                     Intent intent = new Intent(myContxt,Detail.class);
                     intent.putExtra("Tache",tache);
+
                     startActivity(intent);
                 }
 
             }
         });
     }
-
-    protected void onStart(Bundle savedInstanceState){
-
-    }
-
     @Override
     protected void onResume() {
         dbt.open();
@@ -123,14 +126,6 @@ public class Home extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void onClickDetail(View v){
-        Intent intent = new Intent(this, Detail.class);
-        Tache test = new Tache("TestDétail","tache test pour la page de détail","Treilles-En-Gatinais","12/09/19","22:10","12/10/19",Tache.Statut.done,Tache.Priorite.high, Tache.Theme.famille,null);
-
-        intent.putExtra("Tache",test);
-        startActivity(intent);
-    }
-
     public void onClickCreate(View v){
         Intent intent = new Intent(this, CreateTask.class);
         startActivityForResult(intent,2);
@@ -146,12 +141,13 @@ public class Home extends AppCompatActivity {
                 Tache taskToAdd = (Tache) data.getSerializableExtra("CreatedTask");
                 dbt.createTask(taskToAdd);
                 dataAdapter.add(taskToAdd);
+                dbt.close();
             }
         }
         else
         {
             if(resultCode == 3){
-                int radio = data.getIntExtra("radio", -1);
+                radio = data.getIntExtra("radio", -1);
                 hlv = findViewById(R.id.homelist);
                 values = setValues(radio);
                 dataAdapter = new MyCustomAdapter(this,
@@ -208,7 +204,7 @@ public class Home extends AppCompatActivity {
 
     }
 
-    public class MyCustomAdapter extends ArrayAdapter<Tache>{
+    public class MyCustomAdapter extends ArrayAdapter<Tache> implements Serializable {
 
         private ArrayList<Tache> tacheList;
         private boolean checkbox;

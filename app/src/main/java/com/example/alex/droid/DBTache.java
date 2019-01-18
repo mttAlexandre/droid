@@ -8,11 +8,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class DBTache {
+public class DBTache implements Serializable {
 
     private SQLiteDatabase database;
     private DBHelper dbHelper;
