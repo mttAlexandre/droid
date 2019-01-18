@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -117,13 +118,14 @@ public class DBTache {
         Cursor cursor =database.query(DBHelper.TABLE_TACHE,allColumns,null,null,null,null,DBHelper.COLUMN_DATE);
         Calendar c = Calendar.getInstance();
         String today = ""+c.get(Calendar.DAY_OF_MONTH)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.YEAR);
+        cursor.moveToFirst();
 
-        while(!cursor.isAfterLast()){
+        do {
             Tache t = cursorToTache(cursor);
-            if(t.getTaskDate() == today)
+            if(t.getTaskDate().equals(today))
                 tasksnames.add(t.getNom());
             cursor.moveToNext();
-        }
+        }  while(!cursor.isAfterLast());
         cursor.close();
         return tasksnames;
     }
@@ -245,54 +247,54 @@ public class DBTache {
         Tache t = new Tache();
         t.setId(cursor.getLong(0));
         t.setNom(cursor.getString(1));
-            t.setDescription(cursor.getString(2));
-            String theme = cursor.getString(3);
-            if (theme != null) {
-                if (theme == "Travail")
-                    t.setTheme(Tache.Theme.travail);
-                else if (theme == "Famille")
-                    t.setTheme(Tache.Theme.famille);
-                else if (theme == "RDV")
-                    t.setTheme(Tache.Theme.rdv);
-                else if (theme == "Maison")
-                    t.setTheme(Tache.Theme.maison);
-                else
-                    t.setTheme(Tache.Theme.course);
-            } else
-                t.setTheme(null);
+        t.setDescription(cursor.getString(2));
+        String theme = cursor.getString(3);
+        if (theme != null) {
+            if (theme == "Travail")
+                t.setTheme(Tache.Theme.travail);
+            else if (theme == "Famille")
+                t.setTheme(Tache.Theme.famille);
+            else if (theme == "RDV")
+                t.setTheme(Tache.Theme.rdv);
+            else if (theme == "Maison")
+                t.setTheme(Tache.Theme.maison);
+            else
+                t.setTheme(Tache.Theme.course);
+        } else
+            t.setTheme(null);
 
-            t.setLieu(cursor.getString(4));
-            t.setTaskDate(cursor.getString(5));
-            t.setTaskTime(cursor.getString(6));
-            t.setTaskDeadline(cursor.getString(7));
+        t.setLieu(cursor.getString(4));
+        t.setTaskDate(cursor.getString(5));
+        t.setTaskTime(cursor.getString(6));
+        t.setTaskDeadline(cursor.getString(7));
 
-            String statut = cursor.getString(8);
-            if (statut != null) {
-                if (statut == "To do")
-                    t.setStatut(Tache.Statut.todo);
-                else
-                    t.setStatut(Tache.Statut.done);
-            }
+        String statut = cursor.getString(8);
+        if (statut != null) {
+            if (statut == "To do")
+                t.setStatut(Tache.Statut.todo);
+            else
+                t.setStatut(Tache.Statut.done);
+        }
 
-            String priorite = cursor.getString(9);
-            if (priorite != null) {
-                if (priorite == "Haute")
-                    t.setPriorite(Tache.Priorite.high);
-                else if (priorite == "Moyenne")
-                    t.setPriorite(Tache.Priorite.medium);
-                else
-                    t.setPriorite(Tache.Priorite.low);
-            } else {
-                t.setPriorite(null);
-            }
+        String priorite = cursor.getString(9);
+        if (priorite != null) {
+            if (priorite == "Haute")
+                t.setPriorite(Tache.Priorite.high);
+            else if (priorite == "Moyenne")
+                t.setPriorite(Tache.Priorite.medium);
+            else
+                t.setPriorite(Tache.Priorite.low);
+        } else {
+            t.setPriorite(null);
+        }
 
-        /*String frequence = cursor.getString(10);
-        if(frequence != null){
-            if(frequence == "Tous les jours")
-        }*/
+    /*String frequence = cursor.getString(10);
+    if(frequence != null){
+        if(frequence == "Tous les jours")
+    }*/
 
 
-            //fraquence
+        //fraquence
 
 
         return t;

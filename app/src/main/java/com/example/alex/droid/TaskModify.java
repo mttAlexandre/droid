@@ -54,7 +54,28 @@ public class TaskModify extends AppCompatActivity implements DateFragment.OnComp
             this.buttonDeadline.setText(tache.getTaskDeadline());
         else
             this.buttonDeadline.setText("Choisir une deadline");
-        //TODO Faire les radioButton
+
+        Tache.Priorite prio = tache.getPriorite();
+        if(prio != null){
+            if(prio == Tache.Priorite.high)
+                radioGroupPriorite.check(R.id.modifyradioHaute);
+            else if(prio == Tache.Priorite.medium)
+                radioGroupPriorite.check(R.id.modifyradioMoyenne);
+            else if(prio == Tache.Priorite.low)
+                radioGroupPriorite.check(R.id.modifyradioBasse);
+        }
+
+        Tache.Statut statut = tache.getStatut();
+
+        if(statut != null){
+            if(statut == Tache.Statut.todo)
+                radioGroupStatut.check(R.id.modifyradioToDo);
+            else
+                radioGroupStatut.check(R.id.modifyradioDone);
+        }
+
+
+        //TODO Faire frequence
 
 
 
@@ -62,6 +83,12 @@ public class TaskModify extends AppCompatActivity implements DateFragment.OnComp
 
     public void onClickSaveTask(View v){
         //TODO Sauvegarde des modifs
+        tache.setDescription(editTextDescription.getText().toString());
+        tache.setLieu(editTextAdresse.getText().toString());
+
+
+
+
 
     }
 

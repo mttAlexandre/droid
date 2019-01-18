@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,9 +23,12 @@ public class ToDoWidget extends AppWidgetProvider {
         String widgetText = ToDoWidgetConfigureActivity.loadTitlePref(context, appWidgetId) ;
         try {
             ArrayList<String> values = dbt.getAllNomsTacheDuJour();
-            widgetText +=values.toString();
-        }catch (Exception e){
+            if(!values.isEmpty())
+                widgetText +=values.toString();
 
+        }catch (Exception e){
+            //widgetText +=e.toString();
+            widgetText+=" Pas de taches pour aujourd'hui ";
         }
         //+ "\n + "+values.toString();
         // Construct the RemoteViews object

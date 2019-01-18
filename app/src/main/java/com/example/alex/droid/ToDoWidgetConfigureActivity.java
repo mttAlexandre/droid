@@ -99,51 +99,5 @@ public class ToDoWidgetConfigureActivity extends Activity {
 
         mAppWidgetText.setText(loadTitlePref(ToDoWidgetConfigureActivity.this, mAppWidgetId));
     }
-
-/*
-   private DBTache dbt;
-   private ListView hlv;
-   private ArrayList<String> values;
-
-   private static final String PREFS_NAME = "com.example.alex.droid.ToDoWidget";
-   private static final String PREF_PREFIX_KEY = "appwidget_";
-
-   @Override
-    public void onCreate(Bundle icicle){
-         super.onCreate(icicle);
-
-         setResult(RESULT_CANCELED);
-         setContentView(R.layout.to_do_widget_configure);
-         dbt = new DBTache(this);
-         dbt.open();
-
-         Intent intent = getIntent();
-         int radio = intent.getIntExtra("radio", -1);
-
-         hlv = findViewById(R.id.homelist);
-         values = null;
-
-         final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-              android.R.layout.simple_list_item_1, values);
-         hlv.setAdapter(adapter);
-   }
-
-   static void deleteTitlePref(Context context, int appWidgetId) {
-      SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
-      prefs.remove(PREF_PREFIX_KEY + appWidgetId);
-      prefs.apply();
-   }
-
-   // Read the prefix from the SharedPreferences object for this widget.
-   // If there is no preference saved, get the default from a resource
-   static String loadTitlePref(Context context, int appWidgetId) {
-      SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
-      String titleValue = prefs.getString(PREF_PREFIX_KEY + appWidgetId, null);
-      if (titleValue != null) {
-         return titleValue;
-      } else {
-         return context.getString(R.string.appwidget_text);
-      }
-   }*/
 }
 
