@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,10 +26,9 @@ public class Home extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     private ArrayList<Tache> values;
     private boolean checkbox=false;
+    private String daySelected;
 
     MyCustomAdapter dataAdapter = null;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +38,25 @@ public class Home extends AppCompatActivity {
         dbt = new DBTache(this);
         dbt.open();
 
+        daySelected = "";
+        Intent intentCal = getIntent();
+        if(intentCal.hasExtra("daySelected")) {
+            daySelected = intentCal.getStringExtra("daySelected");
+            intentCal.removeExtra("daySelected");
+        }
+
         Intent intent = getIntent();
         int radio = intent.getIntExtra("radio", -1);
 
         hlv = findViewById(R.id.homelist);
-        values = setValues(radio);
+        if(daySelected == "")
+            values = setValues(radio);
+        else {
+            Log.e("coucou2222", daySelected);
+            Button calBut = findViewById(R.id.button2);
+            calBut.setVisibility(View.INVISIBLE);
+            values = dbt.getTaskByDay(daySelected);
+        }
         dataAdapter = new MyCustomAdapter(this,
                 R.layout.item, values, false);
 

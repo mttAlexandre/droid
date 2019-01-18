@@ -73,7 +73,7 @@ public class DBTache {
     public ArrayList<Tache> getTaskByPeriod(String date1){
         ArrayList<Tache> taches = new ArrayList<Tache>();
         //Cursor cursor = database.query(DBHelper.TABLE_TACHE, allColumns, "date <= ? and date >= ?", new String[]{date1, date2}, null, null, DBHelper.COLUMN_DATE+" DESC");
-        Cursor cursor = database.query(DBHelper.TABLE_TACHE, allColumns, null, null, null, null, DBHelper.COLUMN_DATE+" DESC");
+        Cursor cursor = database.query(DBHelper.TABLE_TACHE, allColumns, null, null, null, null, DBHelper.COLUMN_DATE+" ASC");
 
         cursor.moveToFirst();
         String [] date = date1.split("/");
@@ -88,6 +88,23 @@ public class DBTache {
                     taches.add(t);
                 }
             }
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return taches;
+    }
+
+    public ArrayList<Tache> getTaskByDay(String date){
+        ArrayList<Tache> taches = new ArrayList<Tache>();
+        //Cursor cursor = database.query(DBHelper.TABLE_TACHE, allColumns, "date <= ? and date >= ?", new String[]{date1, date2}, null, null, DBHelper.COLUMN_DATE+" DESC");
+        Cursor cursor = database.query(DBHelper.TABLE_TACHE, allColumns, "date = ?", new String[]{date}, null, null, DBHelper.COLUMN_DATE+" ASC");
+
+        cursor.moveToFirst();
+
+        while (!cursor.isAfterLast()) {
+            Tache t = cursorToTache(cursor);
+            taches.add(t);
+
             cursor.moveToNext();
         }
         cursor.close();

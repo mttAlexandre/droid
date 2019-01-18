@@ -1,6 +1,7 @@
 package com.example.alex.droid;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -26,7 +27,7 @@ public class FragmentCalendar2 extends Fragment{
 
     private static FragmentCalendar2 myFragment;
     private static Calendar cal;
-    private static ArrayList<Tache> value;
+    private ArrayList<Tache> value;
     private static Context cont;
 
     public FragmentCalendar2(){}
@@ -82,11 +83,11 @@ public class FragmentCalendar2 extends Fragment{
 
         //Log.e("coucou4", "cal : " + cal.get(Calendar.MONTH));
 
-        Calendar mcal = (Calendar) cal.clone();
+        final Calendar mcal = (Calendar) cal.clone();
         mcal.set(Calendar.DAY_OF_MONTH, 1);
         int compteurJour = 1;
 
-        ArrayList<Tache> value2 = value;
+        int compteurListe = 0;
 
         TableLayout lay = (TableLayout) v.findViewById(R.id.layoutButton);
 
@@ -167,11 +168,11 @@ public class FragmentCalendar2 extends Fragment{
                         b.setId(i);
                         String resText = "";
                         Boolean test = true;
-                        while(test && !value.isEmpty()){
-                            String [] breakDate = value.get(0).getTaskDate().split("/");
+                        while(test && compteurListe < value.size()){
+                            String [] breakDate = value.get(compteurListe).getTaskDate().split("/");
                             if(Integer.parseInt(breakDate[0]) == mcal.get(Calendar.DAY_OF_MONTH)) {
-                                resText += "<p>" + value.get(0).getNom() + "</p>";
-                                value.remove(0);
+                                resText += "<p>" + value.get(compteurListe).getNom() + "</p>";
+                                compteurListe++;
                             }
                             else{
                                 test = false;
@@ -182,6 +183,15 @@ public class FragmentCalendar2 extends Fragment{
                         //b.setGravity(AXIS_PULL_BEFORE);
                         b.setPadding(5, 0, 0, 0);
                         b.setTextSize(10);
+
+                        final int finalCompteurJour = compteurJour;
+                        b.setOnClickListener(new View.OnClickListener(){
+                            public void onClick(View v){
+                                Intent intent = new Intent(cont, Home.class);
+                                intent.putExtra("daySelected", "" + (finalCompteurJour-1) +"/"+(mcal.get(Calendar.MONTH)+1)+"/"+mcal.get(Calendar.YEAR));
+                                startActivity(intent);
+                            }
+                        });
 
                         //b.setEllipsize(TextUtils.TruncateAt.END);
 
@@ -203,11 +213,11 @@ public class FragmentCalendar2 extends Fragment{
                         b.setId(i);
                         String resText = "";
                         Boolean test = true;
-                        while(test && !value.isEmpty()){
-                            String [] breakDate = value.get(0).getTaskDate().split("/");
+                        while(test && compteurListe < value.size()){
+                            String [] breakDate = value.get(compteurListe).getTaskDate().split("/");
                             if(Integer.parseInt(breakDate[0]) == mcal.get(Calendar.DAY_OF_MONTH)) {
-                                resText += "<p>" + value.get(0).getNom() + "</p>";
-                                value.remove(0);
+                                resText += "<p>" + value.get(compteurListe).getNom() + "</p>";
+                                compteurListe++;
                             }
                             else{
                                 test = false;
@@ -220,6 +230,15 @@ public class FragmentCalendar2 extends Fragment{
                         b.setSingleLine(true);
                         b.setPadding(5, 0, 0, 0);
                         b.setTextSize(10);
+
+                        final int finalCompteurJour = compteurJour;
+                        b.setOnClickListener(new View.OnClickListener(){
+                            public void onClick(View v){
+                                Intent intent = new Intent(cont, Home.class);
+                                intent.putExtra("daySelected", "" + (finalCompteurJour-1) +"/"+(mcal.get(Calendar.MONTH)+1)+"/"+mcal.get(Calendar.YEAR));
+                                startActivity(intent);
+                            }
+                        });
 
                         //b.setEllipsize(TextUtils.TruncateAt.END);
 
@@ -249,7 +268,7 @@ public class FragmentCalendar2 extends Fragment{
                 }
                 else {
                     for (int i = 0; i < 7; i++) {
-                        Button b = (Button) new CalendarButton(cont);
+                        final Button b = (Button) new CalendarButton(cont);
 
                         b.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.MATCH_PARENT, (float) 0.14));
                         b.setId(i);
@@ -257,11 +276,11 @@ public class FragmentCalendar2 extends Fragment{
                         compteurJour++;
                         String resText = "";
                         Boolean test = true;
-                        while(test && !value.isEmpty()){
-                            String [] breakDate = value.get(0).getTaskDate().split("/");
+                        while(test && compteurListe < value.size()){
+                            String [] breakDate = value.get(compteurListe).getTaskDate().split("/");
                             if(Integer.parseInt(breakDate[0]) == mcal.get(Calendar.DAY_OF_MONTH)) {
-                                resText += "<p>" + value.get(0).getNom() + "</p>";
-                                value.remove(0);
+                                resText += "<p>" + value.get(compteurListe).getNom() + "</p>";
+                                compteurListe++;
                             }
                             else{
                                 test = false;
@@ -269,6 +288,15 @@ public class FragmentCalendar2 extends Fragment{
                         }
 
                         b.setText( Html.fromHtml("<p>"+mcal.get(Calendar.DAY_OF_MONTH)+"</p>"+resText));
+
+                        final int finalCompteurJour = compteurJour;
+                        b.setOnClickListener(new View.OnClickListener(){
+                            public void onClick(View v){
+                                Intent intent = new Intent(cont, Home.class);
+                                intent.putExtra("daySelected", "" + (finalCompteurJour-1) +"/"+(mcal.get(Calendar.MONTH)+1)+"/"+mcal.get(Calendar.YEAR));
+                                startActivity(intent);
+                            }
+                        });
 
                         //b.setGravity(AXIS_PULL_BEFORE);
                         b.setPadding(5, 0, 0, 0);

@@ -25,7 +25,7 @@ public class FragmentCalendar1 extends Fragment{
 
     private static FragmentCalendar1 myFragment;
     private static Calendar cal;
-    private static ArrayList<Tache> value;
+    private ArrayList<Tache> value;
     private static Context cont;
 
     public FragmentCalendar1(){}
@@ -86,7 +86,7 @@ public class FragmentCalendar1 extends Fragment{
         mcal.set(Calendar.DAY_OF_MONTH, 1);
         int compteurJour = 1;
 
-        ArrayList<Tache> value2 = value;
+        int compteurListe = 0;
 
         TableLayout lay = (TableLayout) v.findViewById(R.id.layoutButton);
 
@@ -165,11 +165,11 @@ public class FragmentCalendar1 extends Fragment{
                         b.setId(i);
                         String resText = "";
                         Boolean test = true;
-                        while(test && !value2.isEmpty()){
-                            String [] breakDate = value2.get(0).getTaskDate().split("/");
+                        while(test && compteurListe < value.size()){
+                            String [] breakDate = value.get(compteurListe).getTaskDate().split("/");
                             if(Integer.parseInt(breakDate[0]) == mcal.get(Calendar.DAY_OF_MONTH)) {
-                                resText += "<p>" + value2.get(0).getNom() + "</p>";
-                                value2.remove(0);
+                                resText += "<p>" + value.get(compteurListe).getNom() + "</p>";
+                                compteurListe++;
                             }
                             else{
                                 test = false;
@@ -203,11 +203,11 @@ public class FragmentCalendar1 extends Fragment{
                         b.setId(i);
                         String resText = "";
                         Boolean test = true;
-                        while(test && !value2.isEmpty()){
-                            String [] breakDate = value2.get(0).getTaskDate().split("/");
+                        while(test && compteurListe < value.size()){
+                            String [] breakDate = value.get(compteurListe).getTaskDate().split("/");
                             if(Integer.parseInt(breakDate[0]) == mcal.get(Calendar.DAY_OF_MONTH)) {
-                                resText += "<p>" + value2.get(0).getNom() + "</p>";
-                                value2.remove(0);
+                                resText += "<p>" + value.get(compteurListe).getNom() + "</p>";
+                                compteurListe++;
                             }
                             else{
                                 test = false;
@@ -256,11 +256,11 @@ public class FragmentCalendar1 extends Fragment{
                         compteurJour++;
                         String resText = "";
                         Boolean test = true;
-                        while(test && !value2.isEmpty()){
-                            String [] breakDate = value2.get(0).getTaskDate().split("/");
+                        while(test && compteurListe < value.size()){
+                            String [] breakDate = value.get(compteurListe).getTaskDate().split("/");
                             if(Integer.parseInt(breakDate[0]) == mcal.get(Calendar.DAY_OF_MONTH)) {
-                                resText += "<p>" + value2.get(0).getNom() + "</p>";
-                                value2.remove(0);
+                                resText += "<p>" + value.get(compteurListe).getNom() + "</p>";
+                                compteurListe++;
                             }
                             else{
                                 test = false;
