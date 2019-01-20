@@ -90,7 +90,7 @@
             android:id="@+id/modifyinputtextDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textCapCharacters|textMultiLine" />
+            android:inputType="textMultiLine|textCapSentences" />
     </android.support.design.widget.TextInputLayout>
 
     <TextView
